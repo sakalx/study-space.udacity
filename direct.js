@@ -1,4 +1,4 @@
-const develop = 'src_Redax-React-Fetch';
+const develop = 'src';
 const production = 'dist';
 
 exports.develop = develop;
