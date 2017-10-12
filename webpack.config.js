@@ -3,7 +3,6 @@ const sourceMap = isProd ? 'nosources-source-map' : 'eval-source-map';
 
 
 const
-    myDirect              = require('./direct'),
     path                  = require('path'),
     webpack               = require('webpack'),
     CleanWebpackPlugin    = require('clean-webpack-plugin'),
@@ -13,10 +12,11 @@ const
 
 
 const
-    develop = myDirect.develop,
-    production = myDirect.production;
+    develop    = 'src',
+    production = 'dist';
+
 const
-    SRC_DIR = path.join(__dirname, develop),
+    SRC_DIR  = path.join(__dirname, develop),
     DIST_DIR = path.join(__dirname, production);
 
 
@@ -25,7 +25,7 @@ const
 const cleanFolderProd = new CleanWebpackPlugin(production);
 
 const commonsChunk = new webpack.optimize.CommonsChunkPlugin({
-  name: ['app', 'vendor', 'webpack'],
+  name: ['app', 'vendor'],
 });
 
 const favicons = new FaviconsWebpackPlugin({
@@ -73,11 +73,10 @@ const definePlugin = new webpack.DefinePlugin({
 
 //============================================================
 // Config html
-const htmlConfig = [
-  {
-    loader: 'html-loader',
-    options: {minimize: isProd},
-  }];
+const htmlConfig = {
+  loader: 'html-loader',
+  options: {minimize: isProd},
+};
 
 // Config css
 const
@@ -95,43 +94,34 @@ const
     cssConfig = isProd ? cssProd : cssDev;
 
 // Config fonts
-const fontConfig = [
-  {
-    loader: 'file-loader',
-    options: {
-      name: '[name].[ext]',
-      outputPath: 'fonts/',
-    },
-  }];
+const fontConfig = {
+  loader: 'file-loader',
+  options: {
+    name: '[name].[ext]',
+    outputPath: 'fonts/',
+  },
+};
 
 // Config svg
-const svgConfig = [
-  {
-    loader: 'file-loader',
-    options: {
-      name: '[name].[ext]',
-      outputPath: 'svg/',
-    },
-  }];
+const svgConfig = {
+  loader: 'file-loader',
+  options: {
+    name: '[name].[ext]',
+    outputPath: 'svg/',
+  },
+};
 
 // Config img
 const
-    imgDev = [
-      {
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]',
-          outputPath: 'images/',
-        },
-      }],
-    imgProd = [
-      {
-        loader: 'file-loader',
-        options: {
-          name: '[name].[ext]',
-          outputPath: 'images/',
-        },
+    imgDev = {
+      loader: 'file-loader',
+      options: {
+        name: '[name].[ext]',
+        outputPath: 'images/',
       },
+    },
+    imgProd = [
+      imgDev,
       {
         loader: 'image-webpack-loader',
         options: {
@@ -225,7 +215,7 @@ const config = {
   },
 
   plugins: isProd ? [
-   cleanFolderProd,
+    cleanFolderProd,
     commonsChunk,
     favicons,
     htmlIndex,
