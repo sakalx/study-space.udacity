@@ -141,7 +141,7 @@ const config = {
 
   entry: {
     vendor: ['react', 'react-dom'],
-    app: SRC_DIR + '/App',
+    app: SRC_DIR + '/index',
   },
 
   output: {
@@ -215,13 +215,13 @@ const config = {
   },
 
   plugins: isProd ? [
-    cleanFolderProd,
+    //cleanFolderProd,
     commonsChunk,
-    favicons,
+    //favicons,
     htmlIndex,
     extractCss,
     definePlugin,
-    uglifyJs,
+    // uglifyJs,
   ] : [
     commonsChunk,
     htmlIndex,
