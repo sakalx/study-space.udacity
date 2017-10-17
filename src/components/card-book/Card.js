@@ -22,7 +22,6 @@ class Card extends React.Component {
   }
 
   render() {
-    console.log(this.book);
     return (
         <section>
           <Paper style={style} zDepth={1}>
@@ -31,7 +30,7 @@ class Card extends React.Component {
             {(this.book.authors) ?
                 <h4 style={{color: '#ff80ab'}}>{this.book.authors.join(` & `)}</h4> :
                 <h4 style={{color: '#ff80ab'}}>Unknown writer</h4>}
-            <ButtonMoveTo status={this.book.shelf}/>
+            <ButtonMoveTo bookObj={this.book}/>
           </Paper>
         </section>
     );
