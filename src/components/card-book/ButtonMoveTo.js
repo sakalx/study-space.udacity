@@ -1,6 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import {SHELVES, validName} from 'root/helper';
+
+import {update} from 'root/api/BooksAPI';
+
 import Popover from 'material-ui/Popover';
 import Menu from 'material-ui/Menu';
 import Divider from 'material-ui/Divider';
@@ -20,10 +24,10 @@ class ButtonMoveTo extends React.Component {
     this.state = {
       open: false,
     };
-    this.stausBook = props.status;
+    this.book = props.bookObj;
   }
 
-  handleTouchTap = (event) => {
+  handleTouchTap = event => {
     // This prevents ghost click.
     event.preventDefault();
     this.setState({
@@ -35,6 +39,13 @@ class ButtonMoveTo extends React.Component {
     this.setState({
       open: false,
     });
+  };
+
+  handleUpdateStatus = (id, shelf) => {
+    console.log(shelf);
+    console.log(id);
+    update({id: 'nggnmAEACAAJ'}, 'currentlyReading').
+        then(response => console.log(response));
   };
 
   render() {
@@ -54,10 +65,13 @@ class ButtonMoveTo extends React.Component {
             <Menu style={{padding: '5px'}}>
               <span style={{color: '#888'}}> Move to... </span>
               <Divider style={{height: '2px'}}/>
-              <RadioButtonGroup name="shipSpeed" defaultSelected={this.stausBook}>
-                <RadioButton value="currentlyReading" label="Currently Reading"/>
-                <RadioButton value="wantToRead" label="Want to Read"/>
-                <RadioButton value="read" label="Read"/>
+              <RadioButtonGroup defaultSelected={this.book.shelf} name="shipSpeed">
+                {SHELVES.map(
+                    (e, i) => <RadioButton key={i} value={e} label={validName(e)}/>)}
+                <RadioButton
+                    onClick={this.handleUpdateStatus.bind(this, `${this.book.id}`,
+                        'read')}
+                    value="remove" label="Remove"/>
               </RadioButtonGroup>
             </Menu>
           </Popover>
@@ -67,7 +81,7 @@ class ButtonMoveTo extends React.Component {
 }
 
 ButtonMoveTo.propTypes = {
-  status: PropTypes.string,
+  bookObj: PropTypes.object,
 };
 
 export default ButtonMoveTo;
