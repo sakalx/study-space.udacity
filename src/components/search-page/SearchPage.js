@@ -11,15 +11,30 @@ class SearchPage extends React.Component {
   constructor(props) {
     super();
     this.state = {
-      books: [],
+      booksFound: [],
+      booksWeHave: [],
       circularProgress: false,
-
     };
+  }
+
+  componentWillMount() {
+    getAll().then(data => this.setState({booksWeHave: data}));
   }
 
   handleValidInput = v => v.match(/[A-Z]/gi);
 
-  handleSetState = (a, b) => this.setState({books: a, circularProgress: b});
+  handleSetState = (a, b) => {
+    this.setState({booksFound: a, circularProgress: b});
+    return a;
+  };
+
+  handleMatchBook = a => {
+    if (Array.isArray(a))
+      a.forEach(found =>
+          this.state.booksWeHave.forEach(have =>
+              (have.id === found.id) ? found['shelf'] = have.shelf : have));
+    return a;
+  };
 
   handleUpdateInput = e => {
     if (e.target.value.length > 2) {
@@ -27,12 +42,15 @@ class SearchPage extends React.Component {
       if (validVal) {
         this.handleSetState([], true);
         search(validVal.join(''), 20).
-            then(arrBooks => this.handleSetState(arrBooks, false));
-      } else { alert('Incorrect Data'); }
+            then(arrBooks => this.handleMatchBook(arrBooks)).
+            then(arrBooks => this.handleSetState(arrBooks, false)).
+            catch(err => alert(`we have some issue: ${err.name} ${err.message}`));
+      }
     }
   };
 
   render() {
+
     return (
         <section style={{textAlign: 'center'}}>
           <ButtonBack/>
@@ -45,11 +63,14 @@ class SearchPage extends React.Component {
           />
 
           {(this.state.circularProgress) ?
-              <CircularProgress style={{marginTop: '30%'}} size={120}/> : <span/>}
+              <CircularProgress style={{marginTop: '15vh'}} size={120}/> : <span/>}
 
-          {(this.state.books.error) ? <h1>Our Apologies nothing found 404</h1> :
+          {(this.state.booksFound.error) ? <h1>Our Apologies nothing found 404</h1> :
               <ul style={{display: 'flex', flexWrap: 'wrap', listStyle: 'none'}}>
-                {this.state.books.map((book, i) => <Card key={i} bookObj={book}/>)}
+                {
+                  this.state.booksFound.map((book, i) => {
+                    return <Card key={i} bookObj={book}/>;
+                  })}
               </ul>}
         </section>
     );
