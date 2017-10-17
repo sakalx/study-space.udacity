@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {validName} from 'root/helper';
 
 import Card from '../../components/card-book/Card';
 import Divider from 'material-ui/Divider';
@@ -11,15 +12,10 @@ class ShelfName extends React.Component {
     this.books = props.booksArr;
   }
 
-  validShelfName() {
-    return this.shelfName[0].toUpperCase() +
-        this.shelfName.slice(1).replace(/[A-Z]/g, ' $&');
-  }
-
   render() {
     return (
         <section>
-          <h2>{this.validShelfName()}</h2>
+          <h2>{validName(this.shelfName)}</h2>
           <Divider/>
           <ul style={{display: 'flex', flexWrap: 'wrap', listStyle: 'none'}}>
             {this.books.map((book, i) => <Card key={i} bookObj={book}/>)}
