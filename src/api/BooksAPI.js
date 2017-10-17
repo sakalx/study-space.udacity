@@ -38,7 +38,8 @@ export const update = (book, shelf) =>
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({shelf}),
-    }).then(res => res.json()).
+    }).
+        then(res => res.json()).
         catch(err => alert(`we have some issue: ${err.name}
         ${err.message}`));
 
@@ -50,6 +51,7 @@ export const search = (query, maxResults) =>
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({query, maxResults}),
-    }).then(res => res.json()).then(data => data.books).
+    }).
+        then(res => res.json()).then(data => data.books).
         catch(err => alert(`we have some issue: ${err.name}
         ${err.message}`));
