@@ -1,14 +1,13 @@
 import React from 'react';
 
 import {getAll} from 'root/api/BooksAPI';
+import {SHELVES} from 'root/helper';
 
 import CircularProgress from 'material-ui/CircularProgress';
 
 import Header from './Header';
 import Shelf from './Shelf';
 import BtnAdd from './ButtonAdd';
-
-const shelves = ['currentlyReading', 'wantToRead', 'read'];
 
 class HomePage extends React.Component {
   constructor(props) {
@@ -19,8 +18,7 @@ class HomePage extends React.Component {
   }
 
   componentWillMount() {
-    getAll().
-        then(data => this.setState({books: data.map(obj => obj)}));
+    getAll().then(data => this.setState({books: data}));
   }
 
   render() {
@@ -35,7 +33,7 @@ class HomePage extends React.Component {
     return (
         <div>
           <Header/>
-          {shelves.map((shelf, i) => {
+          {SHELVES.map((shelf, i) => {
             const books = this.state.books.filter(book => book.shelf === shelf);
             return <Shelf key={i} shelfName={shelf} booksArr={books}/>;
           })}
