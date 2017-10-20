@@ -1,31 +1,27 @@
-const isProd    = process.env.NODE_ENV === 'production';
+const isProd = process.env.NODE_ENV === 'production';
 const sourceMap = isProd ? 'nosources-source-map' : 'eval-source-map';
 
-
 const
-    path                  = require('path'),
-    webpack               = require('webpack'),
-    CleanWebpackPlugin    = require('clean-webpack-plugin'),
-    HtmlWebpackPlugin     = require('html-webpack-plugin'),
-    ExtractTextPlugin     = require('extract-text-webpack-plugin'),
+    path = require('path'),
+    webpack = require('webpack'),
+    CleanWebpackPlugin = require('clean-webpack-plugin'),
+    HtmlWebpackPlugin = require('html-webpack-plugin'),
     FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
-
 const
-    develop    = 'src',
+    develop = 'src',
     production = 'dist';
 
 const
-    SRC_DIR  = path.join(__dirname, develop),
+    SRC_DIR = path.join(__dirname, develop),
     DIST_DIR = path.join(__dirname, production);
-
 
 //============================================================
 // Plugins
 const cleanFolderProd = new CleanWebpackPlugin(production);
 
 const commonsChunk = new webpack.optimize.CommonsChunkPlugin({
-  name: ['app', 'vendor'],
+  name: ['index', 'vendor'],
 });
 
 const favicons = new FaviconsWebpackPlugin({
@@ -49,90 +45,21 @@ const favicons = new FaviconsWebpackPlugin({
 });
 
 const htmlIndex = new HtmlWebpackPlugin({
-      template: path.join(__dirname, develop, 'index.html'),
-      inject: 'body',
-      hash: true,
-      filename: 'index.html',
-      chunks: ['app', 'vendor', 'webpack'],
-    });
-
-const extractCss = new ExtractTextPlugin({
-      disable: !isProd,
-      filename: 'style/[name].[chunkhash].css',
-    });
+  template: path.join(__dirname, develop, 'index.html'),
+  inject: 'body',
+  hash: true,
+  filename: 'index.html',
+  chunks: ['index', 'vendor'],
+});
 
 const uglifyJs = new webpack.optimize.UglifyJsPlugin({
-      parallel: {cache: true, workers: 2},
-      sourceMap: true,
-    });
+  parallel: {cache: true, workers: 2},
+  sourceMap: true,
+});
 
 const definePlugin = new webpack.DefinePlugin({
-      'process.env': {NODE_ENV: JSON.stringify('production')},
-    });
-
-
-//============================================================
-// Config html
-const htmlConfig = {
-  loader: 'html-loader',
-  options: {minimize: isProd},
-};
-
-// Config css
-const
-    cssDev  = ['css-loader', 'sass-loader'],
-    cssProd = [
-      'css-loader',
-      {
-        loader: 'postcss-loader',
-        options: {
-          plugins() { return [require('autoprefixer'), require('cssnano')]; },
-        },
-      },
-      'sass-loader',
-    ],
-    cssConfig = isProd ? cssProd : cssDev;
-
-// Config fonts
-const fontConfig = {
-  loader: 'file-loader',
-  options: {
-    name: '[name].[ext]',
-    outputPath: 'fonts/',
-  },
-};
-
-// Config svg
-const svgConfig = {
-  loader: 'file-loader',
-  options: {
-    name: '[name].[ext]',
-    outputPath: 'svg/',
-  },
-};
-
-// Config img
-const
-    imgDev = {
-      loader: 'file-loader',
-      options: {
-        name: '[name].[ext]',
-        outputPath: 'images/',
-      },
-    },
-    imgProd = [
-      imgDev,
-      {
-        loader: 'image-webpack-loader',
-        options: {
-          optipng: {optimizationLevel: 7},
-          pngquant: {quality: '65-90', speed: 4},
-          mozjpeg: {progressive: true, quality: 65},
-        },
-      },
-    ],
-    imgConfig = isProd ? imgProd : imgDev;
-
+  'process.env': {NODE_ENV: JSON.stringify('production')},
+});
 
 //============================================================
 // WebPack
@@ -141,7 +68,7 @@ const config = {
 
   entry: {
     vendor: ['react', 'react-dom'],
-    app: SRC_DIR + '/index',
+    index: SRC_DIR + '/index',
   },
 
   output: {
@@ -153,49 +80,18 @@ const config = {
 
   module: {
     rules: [
-      // html-loader
       {
         include: SRC_DIR,
         test: /\.html$/,
-        use: htmlConfig,
+        use: {
+          loader: 'html-loader',
+          options: {minimize: isProd},
+        },
       },
-      // css-loader
       {
-        include: [
-          path.resolve(__dirname, `${develop}`),
-        ],
-        test: /\.(scss|css)$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: cssConfig,
-          publicPath: './',
-        }),
-      },
-      // babel-loader
-      {
-        include: [
-          path.resolve(__dirname, `${develop}`),
-        ],
+        include: path.resolve(__dirname, `${develop}`),
         test: /\.(js|jsx)$/,
         use: 'babel-loader',
-      },
-      // img via file-loader
-      {
-        include: path.resolve(__dirname, `${develop}/images/`),
-        test: /\.(jpg|png)$/,
-        use: imgConfig,
-      },
-      // fonts via file-loader
-      {
-        include: path.resolve(__dirname, `${develop}/fonts/`),
-        test: /\.(woff|woff2|svg)$/,
-        use: fontConfig,
-      },
-      // svg via file-loader
-      {
-        include: path.resolve(__dirname, `${develop}/svg/`),
-        test: /\.(svg)$/,
-        use: svgConfig,
       },
     ],
   },
@@ -207,25 +103,20 @@ const config = {
     historyApiFallback: true,
   },
 
-  // shortcuts
   resolve: {
-    alias: {
-      'root': path.resolve(__dirname, develop),
-    },
+    alias: {'root': path.resolve(__dirname, develop)},
   },
 
   plugins: isProd ? [
-    //cleanFolderProd,
+    cleanFolderProd,
     commonsChunk,
-    //favicons,
+    favicons,
     htmlIndex,
-    extractCss,
     definePlugin,
-    // uglifyJs,
+    uglifyJs,
   ] : [
     commonsChunk,
     htmlIndex,
-    extractCss,
   ],
 };
 
