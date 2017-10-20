@@ -1,22 +1,31 @@
-npm install - installing
+npm install     - installing
 
 npm start 	    - launch project
 
 npm run build 	- build production version
 
 
-Project include :
 
-src/api/ 		- Calls to a backend API
+Project include:
 
-src/components/	- Presentational (aka Dumb) components go here
+api/ 		- Calls to a backend API
 
-src/favicon/    - Favicon (Logo)
+components/ - Presentational (aka Dumb) components go here
 
-src/fonts/      - Project fonts
+scenes/	    - These are the stateful ones, and the ones that make the API calls
 
-src/helpers.js/ - Additional js
+theme.js    - Project theme
 
-src/scenes/		- These are the stateful ones, and the ones that make the API calls
+helpers.js  - Helper Functions and Constants
+
+favicon/    - Favicon (Logo)
+
+
+
+
+
+
+
+
 
 
