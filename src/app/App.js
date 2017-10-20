@@ -1,9 +1,9 @@
 import React from 'react';
 import {Route, Switch} from 'react-router-dom';
 
-import HomePage from './home-page/HomePage';
-import SearchPage from './search-page/SearchPage';
-import NotFound from './NotFound';
+import HomePage from './home-page/Index';
+import SearchPage from './search-page/Index';
+import NotFound from './404/Index';
 
 class App extends React.Component {
   render() {
