@@ -9,7 +9,7 @@ const
     FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 const
-    develop = 'src',
+    develop = 'contacts.app/src',
     production = 'dist';
 
 const
@@ -97,7 +97,7 @@ const config = {
   },
 
   devServer: {
-    port: 9000,
+    port: 3000,
     open: true,
     inline: true,
     historyApiFallback: true,
