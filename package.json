@@ -1,7 +1,7 @@
 {
-  "name": "webpack-work-space",
+  "name": "udacity-study-space",
   "version": "1.0.0",
-  "description": "front-end development",
+  "description": "react nanodegree program",
   "main": "index.js",
   "browserslist": [
     "> 1%",
