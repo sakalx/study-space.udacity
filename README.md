@@ -1,9 +1,15 @@
+Install environment:
+
 npm install     - installing
 
 npm start 	    - launch project
 
 npm run build 	- build production version
 
+
+Switch between projects:
+
+webpack.config.js => const develop = 'name folder with project'
 
 
 Project include:
