@@ -1,32 +1,42 @@
-_________________________________________________________________________________________
-_________________________________________________________________________________________
-npm install     - installing environment
+________________________________________________________
+________________________________________________________
+>**npm install** - installing environment
+>
+>**npm start** - launch project
+>
+>**npm run build** - build production version
+________________________________________________________
+________________________________________________________
+# List of Projects
+| folder | app |
+| ------ | ------ |
+| my-reads.app/ | **[myReads.app](https://myreads.000webhostapp.com/)** |
+| contacts.app | **Not Ready** |
 
-npm start 	    - launch project
+## Switch between projects:
+```js
+//webpack.config.js
+const
+    develop = '*.app' //name project-folder
+    production = 'dist'; // name production folder
+```
+________________________________________________________
+________________________________________________________
+## Each Project have:
 
-npm run build 	- build production version
-_________________________________________________________________________________________
-_________________________________________________________________________________________
-Switch between projects:
+- **api/** - _Calls to a backend API_
 
-webpack.config.js => const develop = 'name-project-folder.app'
-_________________________________________________________________________________________
-_________________________________________________________________________________________
-Project include:
+- **components/** - _Presentational (aka Dumb) components go here_
 
-api/ 		- Calls to a backend API
+- **scenes/** - _These are the stateful ones, and the ones that make the API calls_
 
-components/ - Presentational (aka Dumb) components go here
+- **theme.js** - _Project theme_
 
-scenes/	    - These are the stateful ones, and the ones that make the API calls
+- **helpers.js** - _Helper Functions and Constants_
 
-theme.js    - Project theme
-
-helpers.js  - Helper Functions and Constants
-
-favicon/    - Favicon (Logo)
-_________________________________________________________________________________________
-_________________________________________________________________________________________
+- **favicon/** - _Favicon (Logo)_
+________________________________________________________
+________________________________________________________
 
 
 
