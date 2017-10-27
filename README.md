@@ -11,7 +11,7 @@ ________________________________________________________
 | folder | app |
 | ------ | ------ |
 | my-reads.app/ | **[MyReads.app](https://myreads.000webhostapp.com/)** |
-| contacts.app | **[Contacts.app](https://https://road666.000webhostapp.com/m/)** |
+| contacts.app/ | **[Contacts.app](https://https://road666.000webhostapp.com/)** |
 
 ## Switch between projects:
 ```js
