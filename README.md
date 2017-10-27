@@ -10,8 +10,8 @@ ________________________________________________________
 # List of Projects
 | folder | app |
 | ------ | ------ |
-| my-reads.app/ | **[myReads.app](https://myreads.000webhostapp.com/)** |
-| contacts.app | **[myReads.app](https://https://road666.000webhostapp.com/m/)** |
+| my-reads.app/ | **[MyReads.app](https://myreads.000webhostapp.com/)** |
+| contacts.app | **[Contacts.app](https://https://road666.000webhostapp.com/m/)** |
 
 ## Switch between projects:
 ```js
