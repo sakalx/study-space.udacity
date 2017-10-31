@@ -10,7 +10,7 @@ import FlatButton from 'material-ui/FlatButton';
 import Avatar from 'material-ui/Avatar';
 import AvatarIcon from 'material-ui/svg-icons/action/account-box';
 import TextField from 'material-ui/TextField';
-import InputImg from './InputImg';
+import InputImg from '../components/InputImg';
 import SnackBar from 'root/app/snack-bar/Index';
 
 const Wrap = styled.div`
