@@ -41,7 +41,7 @@ const MobileTearSheet = props =>
     </div>;
 
 MobileTearSheet.propTypes = {
-  children: PropTypes.array,
+  children: PropTypes.object,
   style: PropTypes.object,
 };
 
