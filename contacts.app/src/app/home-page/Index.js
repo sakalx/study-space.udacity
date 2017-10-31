@@ -21,13 +21,9 @@ class HomePage extends React.Component {
     this.setState({contacts: callData.getStorage()});
   }
 
-  handleQuery = e => {
-    this.setState({query: e.target.value.trim()});
-  };
+  handleQuery = e => this.setState({query: e.target.value.trim()});
 
-  handleShowAll = () => {
-    this.setState({query: ''});
-  };
+  handleShowAll = () => this.setState({query: ''});
 
   handleRemove = id => {
     this.setState({
