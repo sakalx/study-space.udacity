@@ -7,16 +7,17 @@ import {List, ListItem} from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 
 const UserCard = props => {
+  const {contacts, remove} = props;
   return <List>
-    {props.contacts.map(contact =>
+    {contacts.map(contact =>
         <ListItem
             key={contact.id}
-            style={{paddingBottom: '20px'}}
-            leftAvatar={<Avatar size={50} src={contact.avatarURL}/>}
             primaryText={contact.name}
             secondaryText={contact.email}
+            style={{paddingBottom: '20px'}}
+            leftAvatar={<Avatar size={50} src={contact.img}/>}
             rightIconButton={
-              <IconButton onClick={props.remove.bind(this, contact.id)}
+              <IconButton onClick={() => remove(contact.id)}
                           tooltip="Remove"
                           touch={true}
                           tooltipPosition="bottom-left">
