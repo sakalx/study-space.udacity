@@ -4,6 +4,7 @@ import {create} from 'root/api/LocalStorage';
 import * as UploadImg from 'root/api/UploadImg';
 import theme from 'root/theme';
 
+import WarningIcon from 'material-ui/svg-icons/alert/warning';
 import {Step, StepContent, StepLabel, Stepper} from 'material-ui/Stepper';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
@@ -30,32 +31,45 @@ class NewContact extends React.Component {
     contact: {
       showAvatar: false,
       img: '',
-      name: '',
-      email: '',
+      name: null,
+      email: null,
     },
     messageBar: '',
   };
 
   handleNext = () => {
     const {stepIndex, contact} = this.state;
+    const failed = prop => ({...contact, [prop]: false});
 
-    this.setState({
-      stepIndex: stepIndex + 1,
-      finished: stepIndex >= 2,
-    });
-    stepIndex === 0 && this.setState({
-      contact: {...contact, showAvatar: true},
-    });
-    if (stepIndex >= 2) {
-      create(this.state.contact);
-      this.setState({messageBar: `${contact.name} Successfully Added`});
+    stepIndex < 2 && this.setState({stepIndex: stepIndex + 1});
+
+    switch (stepIndex) {
+      case 0:
+        this.setState({contact: {...contact, showAvatar: true}});
+        break;
+      case 1:
+        !contact.name && this.setState({contact: failed('name')});
+        break;
+      case 2:
+        !contact.email && this.setState({contact: failed('email')});
+        if (contact.name && contact.email) {
+          create(this.state.contact);
+          this.setState({
+            finished: true,
+            stepIndex: stepIndex + 1,
+            messageBar: `${contact.name} Successfully Added`,
+          });
+        } else {
+          this.setState({messageBar: `Require Name and Email`,});
+        }
+        break;
     }
   };
 
   handlePrev = () => {
     const {stepIndex, contact} = this.state;
 
-    stepIndex > 0 && this.setState({stepIndex: stepIndex - 1});
+    stepIndex > 0 && this.setState({messageBar: '', stepIndex: stepIndex - 1});
     stepIndex === 1 && this.setState({
       contact: {...contact, showAvatar: false},
     });
@@ -78,7 +92,7 @@ class NewContact extends React.Component {
     this.setState({
       contact: {
         ...this.state.contact,
-        [input.labels[0].textContent]: input.value,
+        [input.labels[0].textContent]: input.value.trim(),
       },
     });
   };
@@ -88,11 +102,12 @@ class NewContact extends React.Component {
 
     this.setState({
       stepIndex: 0, finished: false,
+      messageBar: '',
       contact: {
         showAvatar: false,
         img: '',
-        name: '',
-        email: '',
+        name: null,
+        email: null,
       },
     });
   };
@@ -128,11 +143,23 @@ class NewContact extends React.Component {
         onChange={this.handleInput}
         hintText={`Contact ${text}`}
         floatingLabelText={text}
-        fullWidth={true}/>;
+        fullWidth={true}
+    />;
   }
 
   render() {
     const {finished, stepIndex, contact, messageBar} = this.state;
+
+    const stepLabel = (title, titleDefault) =>
+        <StepLabel>
+          {title ? <InputTitle>{title}</InputTitle> : titleDefault}
+        </StepLabel>;
+
+    const warningLabel = () =>
+        <StepLabel icon={<WarningIcon color={'#cc181e'}/>}
+                   style={{color: '#cc181e'}}>
+          Empty Field
+        </StepLabel>;
 
     return (
         <Wrap>
@@ -142,7 +169,8 @@ class NewContact extends React.Component {
               <StepLabel >
                 {contact.showAvatar
                     ? <Avatar size={64} src={contact.img} icon={<AvatarIcon/>}/>
-                    : 'Upload Avatar'}
+                    : 'Upload Avatar'
+                }
               </StepLabel>
               <StepContent>
                 <InputImg loadImg={this.handleLoadImg}/>
@@ -151,20 +179,22 @@ class NewContact extends React.Component {
               </StepContent>
             </Step>
 
-            <Step>
-              <StepLabel>
-                {contact.name ? <InputTitle>{contact.name}</InputTitle> : 'Add Name'}
-              </StepLabel>
+            <Step completed={!!contact.name}>
+              {contact.name === false
+                  ? warningLabel()
+                  : stepLabel(contact.name, 'Add Name')
+              }
               <StepContent>
                 {this.renderTextField('name')}
                 {this.renderStepActions(1)}
               </StepContent>
             </Step>
 
-            <Step>
-              <StepLabel>
-                {contact.email ? <InputTitle>{contact.email}</InputTitle> : 'Add Email'}
-              </StepLabel>
+            <Step completed={!!contact.email}>
+              {contact.email === false
+                  ? warningLabel()
+                  : stepLabel(contact.email, 'Add Email')
+              }
               <StepContent>
                 {this.renderTextField('email')}
                 {this.renderStepActions(2)}
@@ -172,13 +202,13 @@ class NewContact extends React.Component {
             </Step>
 
           </Stepper>
-          {finished && (
+          {finished &&
               <section>
                 <h3>Done !</h3>
                 <FlatButton onClick={this.handleReset} label="NEW" secondary={true}/>
               </section>
-          )}
-          <SnackBar message={messageBar} open={finished}/>
+          }
+          <SnackBar message={messageBar} open={!!messageBar}/>
         </Wrap>
     );
   }
