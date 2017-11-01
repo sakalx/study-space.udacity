@@ -4,7 +4,7 @@ import * as callData from 'root/api/LocalStorage';
 import TextField from 'material-ui/TextField';
 import AddBtn from './components/AddBtn';
 import FlatButton from 'material-ui/FlatButton';
-import UserCard from './components/UserCard';
+import UserCard from './scenes/UserCard';
 import TearSheet from './components/TearSheet';
 import SnackBar from '../snack-bar/Index';
 
