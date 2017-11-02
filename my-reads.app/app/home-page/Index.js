@@ -22,45 +22,39 @@ const Loader = styled(CircularProgress)`
 
 class HomePage extends React.Component {
 
-  constructor(props) {
-    super();
-    this.state = {
-      loader: true,
-      currentlyReading: [],
-      wantToRead: [],
-      read: [],
-      messageBar: '',
-      openBar: false,
-    };
+  state = {
+    loader: true,
+    currentlyReading: [],
+    wantToRead: [],
+    read: [],
+    messageBar: '',
+  };
+
+  componentDidMount() {
+    getAll().then(data => data.forEach(book =>
+        this.setState({
+          [book.shelf]: [...this.state[book.shelf], book],
+        })),
+    ).then(e => this.setState({loader: false,}));
   }
 
-  emptyShelf = name => <EmptyShelf>{name} shelf is empty</EmptyShelf>;
-
-  componentWillMount() {
-    getAll().
-        then(data => data.forEach(book => this.state[book.shelf].push(book))).
-        then(i => this.setState({
-          currentlyReading: this.state.currentlyReading,
-          wantToRead: this.state.wantToRead,
-          read: this.state.read,
-          loader: false,
-        }));
-  }
+  handleMoveTo = ({id, shelfIn, shelfOut}) => shelfIn
+      ? this.moveBook(id, shelfIn, shelfOut)
+      : this.removeBook(id, shelfOut);
 
   removeBook = (id, shelfOut) => {
     update({id}, 'false');
     this.setState({
-      messageBar: `Book was removed`,
-      openBar: true,
+      [shelfOut]: this.state[shelfOut].filter(book => book.id !== id),
+      messageBar: `Book was removed from ${validName(shelfOut)}`,
     });
-    this.setState({[shelfOut]: this.state[shelfOut].filter(book => book.id !== id)});
   };
 
   moveBook = (id, shelfIn, shelfOut) => {
     if (shelfIn !== shelfOut) {
       update({id}, shelfIn);
       const transfer = this.state[shelfOut].filter(book => {
-        if (book.id !== id) { return book; }
+        if (book.id !== id) {return book;}
         book.shelf = shelfIn;
         this.state[shelfIn].push(book);
       });
@@ -69,36 +63,40 @@ class HomePage extends React.Component {
         [shelfOut]: transfer,
         [shelfIn]: this.state[shelfIn],
         messageBar: `Book was added to ${validName(shelfIn)}`,
-        openBar: true,
       });
     }
   };
 
-  handleMoveTo = ({id, shelfIn, shelfOut}) =>
-      (shelfIn) ? this.moveBook(id, shelfIn, shelfOut) : this.removeBook(id, shelfOut);
+  renderEmptyShelf = name => <EmptyShelf>{name} shelf is empty</EmptyShelf>;
+
+  renderShelf = shelf =>
+      <Shelf
+          name={validName(shelf)}
+          books={this.state[shelf]}
+          handleMove={this.handleMoveTo.bind(this)}
+      />;
+
 
   render() {
+    const {loader, messageBar} = this.state;
 
-    return (this.state.loader) ? <WrapLoader>
-      <Loader size={120}/>
-    </WrapLoader> : <div>
-      <Header title="MyReads"/>
-
-      {SHELVES.map((shelf, i) =>
-          <div key={i}>
-            {
-              (this.state[shelf].length) ? <Shelf
-                  name={validName(shelf)}
-                  books={this.state[shelf]}
-                  handleMove={this.handleMoveTo.bind(this)}/> : this.emptyShelf(
-                  validName(shelf))
-            }
-          </div>,
-      )}
-
-      <BtnAdd/>
-      <SnackBar message={this.state.messageBar} open={this.state.openBar}/>
-    </div>;
+    return (
+        loader
+            ? <WrapLoader><Loader size={120}/></WrapLoader>
+            : <div>
+          <Header title="MyReads"/>
+          {SHELVES.map((shelf, i) =>
+              <div key={i}>
+                {this.state[shelf].length
+                    ? this.renderShelf(shelf)
+                    : this.renderEmptyShelf(validName(shelf))
+                }
+              </div>,
+          )}
+          <BtnAdd/>
+          <SnackBar message={messageBar} open={!!messageBar}/>
+        </div>
+    );
   }
 }
 

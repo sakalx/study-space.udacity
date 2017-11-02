@@ -19,16 +19,16 @@ const Authors = styled.h4`
 
 const Card = props =>
     <Wrap zDepth={4}>
-
       <Info bookObj={props.bookObj}/>
-
       <h3>{props.bookObj.title}</h3>
-
-      {(props.bookObj.authors) ? <Authors>{props.bookObj.authors.join(` & `)}</Authors> :
-          <Authors>Unknown writer</Authors>}
-
-      <ButtonMoveTo handleMove={props.handleMove}
-                    bookObj={props.bookObj}/>
+      {
+        props.bookObj.authors
+            ? <Authors>{props.bookObj.authors.join(` & `)}</Authors>
+            : <Authors>Unknown writer</Authors>
+      }
+      <ButtonMoveTo bookObj={props.bookObj}
+                    handleMove={props.handleMove}
+      />
     </Wrap>;
 
 Card.propTypes = {

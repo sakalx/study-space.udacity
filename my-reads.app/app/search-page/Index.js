@@ -27,65 +27,26 @@ const List = styled.ul`
 `;
 
 class SearchPage extends React.Component {
-  constructor(props) {
-    super();
-    this.state = {
-      loader: false,
-      booksFound: [],
-      booksWeHave: [],
-      messageBar: '',
-      openBar: false,
-    };
-  }
+  state = {
+    loader: false,
+    booksFound: [],
+    booksWeHave: [],
+    messageBar: '',
+  };
 
-  componentWillMount() {
+  componentDidMount() {
     getAll().then(data => this.setState({booksWeHave: data}));
   }
 
-  updateStatus = (id, shelf) =>
-      this.state.booksFound.find(book => {if (book.id === id) book.shelf = shelf;});
-
-  addBook = (id, shelfIn) => {
-    update({id}, shelfIn);
-    this.updateStatus(id, shelfIn);
-    this.setState({
-      booksFound: this.state.booksFound,
-      messageBar: `Book was added to ${validName(shelfIn)}`,
-      openBar: true,
-    });
-  };
-
-  removeBook = id => {
-    update({id}, 'false');
-    this.updateStatus(id, 'false');
-    this.setState({
-      booksFound: this.state.booksFound,
-      messageBar: `Book was removed`,
-      openBar: true,
-    });
-  };
-
   handleAdd = ({id, shelfIn}) =>
-      (shelfIn) ? this.addBook(id, shelfIn) : this.removeBook(id);
-
-  validInput = v => v.match(/[A-Z]/gi);
-
-  matchBook = a => {
-    if (Array.isArray(a))
-      a.forEach(found =>
-          this.state.booksWeHave.forEach(have =>
-              (have.id === found.id) ? found['shelf'] = have.shelf : have));
-    return a;
-  };
-
-  setBooksFound = (a, b) => {
-    this.setState({booksFound: a, loader: b});
-    return a;
-  };
+      shelfIn ? this.addBook(id, shelfIn) : this.removeBook(id);
 
   handleUpdateInput = e => {
-    if (e.target.value.length > 2) {
-      const validVal = this.validInput(e.target.value);
+    const value = e.target.value;
+
+    if (value.length > 2) {
+      const validVal = value.match(/[A-Z]/gi);
+
       if (validVal) {
         this.setBooksFound([], true);
         search(validVal.join(''), 20).
@@ -95,7 +56,44 @@ class SearchPage extends React.Component {
     }
   };
 
+  setBooksFound = (a, b) => {
+    this.setState({booksFound: a, loader: b});
+    return a;
+  };
+
+  matchBook = a => {
+    if (Array.isArray(a))
+      a.forEach(found =>
+          this.state.booksWeHave.forEach(have =>
+              (have.id === found.id) ? found['shelf'] = have.shelf : have));
+    return a;
+  };
+
+  addBook = (id, shelfIn) => {
+    update({id}, shelfIn);
+    this.updateStatus(id, shelfIn);
+    this.setState({
+      booksFound: this.state.booksFound,
+      messageBar: `Book was added to ${validName(shelfIn)}`,
+    });
+  };
+
+  removeBook = id => {
+    update({id}, 'false');
+    this.updateStatus(id, 'false');
+    this.setState({
+      booksFound: this.state.booksFound,
+      messageBar: `Book was removed`,
+    });
+  };
+
+  updateStatus = (id, shelf) =>
+      this.state.booksFound.find(book => {
+        if (book.id === id) book.shelf = shelf;
+      });
+
   render() {
+    const {loader, booksFound, messageBar} = this.state;
 
     return (
         <Wrap>
@@ -103,24 +101,25 @@ class SearchPage extends React.Component {
           <Btn>
             <ButtonBack/>
           </Btn>
-
           <TextField
               hintText="What book are you looking"
               floatingLabelText="Search..."
               fullWidth={true}
-              onChange={this.handleUpdateInput.bind(this)}/>
-
-          {(this.state.loader) ? <Loader size={120}/> : (this.state.booksFound.error) ?
-              <h1>Our Apologies nothing found 404</h1> : <List>
-                {this.state.booksFound.map((book, i) =>
-                    <Card key={i}
-                          bookObj={book}
-                          handleMove={this.handleAdd.bind(this)}/>,
-                )}
-              </List>
+              onChange={this.handleUpdateInput.bind(this)}
+          />
+          {loader
+              ? <Loader size={120}/>
+              : (booksFound.error)
+                  ? <h1>Our Apologies nothing found 404</h1>
+                  : <List>
+                    {booksFound.map((book, i) =>
+                        <Card key={i}
+                              bookObj={book}
+                              handleMove={this.handleAdd.bind(this)}/>,
+                    )}
+                  </List>
           }
-
-          <SnackBar message={this.state.messageBar} open={this.state.openBar}/>
+          <SnackBar message={messageBar} open={!!messageBar}/>
         </Wrap>
     );
   }
