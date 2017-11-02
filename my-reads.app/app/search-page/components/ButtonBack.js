@@ -16,7 +16,7 @@ const styles = {
   },
 };
 
-const BtnAdd = props =>
+const BtnAdd = () =>
     <Link to='/'>
       <IconButton
           tooltip="Back to MyReads" touch={true}

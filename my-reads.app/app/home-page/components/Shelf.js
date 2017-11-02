@@ -10,16 +10,21 @@ const Wrapper = styled.ul`
  flex-wrap: wrap;
 `;
 
-const Shelf = props =>
-    <section>
-      <h2>{props.name}</h2>
-      <Divider/>
-      <Wrapper>
-        {props.books.map((book, i) =>
-            <Card key={i} bookObj={book} handleMove={props.handleMove}/>,
-        )}
-      </Wrapper>
-    </section>;
+const Shelf = props => {
+  const {name, books, handleMove} = props;
+
+  return (
+      <section>
+        <h2>{name}</h2>
+        <Divider/>
+        <Wrapper>
+          {books.map((book, i) =>
+              <Card key={i} bookObj={book} handleMove={handleMove}/>,
+          )}
+        </Wrapper>
+      </section>
+  );
+};
 
 Shelf.propTypes = {
   name: PropTypes.string,

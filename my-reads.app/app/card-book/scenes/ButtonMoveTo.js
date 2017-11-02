@@ -27,12 +27,8 @@ const MoveMenu = styled(Menu)`
 `;
 
 class ButtonMoveTo extends React.Component {
-  constructor(props) {
-    super();
-    this.state = {
-      open: false,
-    };
-  }
+
+  state = {open: false};
 
   handleTouchTap = event => {
     // This prevents ghost click.
@@ -46,9 +42,11 @@ class ButtonMoveTo extends React.Component {
   handleRequestClose = () => this.setState({open: false});
 
   render() {
+    const {handleMove} = this.props;
+    const {shelf, id} = this.props.bookObj;
+
     return (
         <Wrap>
-
           <FloatingActionButton onClick={this.handleTouchTap} mini={true}>
             <ActionMoveTo/>
           </FloatingActionButton>
@@ -59,37 +57,35 @@ class ButtonMoveTo extends React.Component {
               anchorEl={this.state.anchorEl}
               anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
               targetOrigin={{horizontal: 'right', vertical: 'top'}}
-              onRequestClose={this.handleRequestClose}>
-
+              onRequestClose={this.handleRequestClose}
+          >
             <MoveMenu>
               <Title>Move to...</Title>
               <Hr/>
-
               <RadioButtonGroup name="shipSpeed"
-                                defaultSelected={this.props.bookObj.shelf}>
+                                defaultSelected={shelf}
+              >
                 {SHELVES.map((e, i) =>
                     <RadioButton
                         key={i} label={validName(e)} value={e}
-                        onClick={this.props.handleMove.bind(this,
+                        onClick={handleMove.bind(this,
                             {
-                              id: `${this.props.bookObj.id}`,
+                              id: `${id}`,
                               shelfIn: `${e}`,
-                              shelfOut: `${this.props.bookObj.shelf}`,
+                              shelfOut: `${shelf}`,
                             },
                         )}
                     />,
                 )}
-
                 <RadioButton
                     label="Remove" value="remove"
-                    onClick={this.props.handleMove.bind(this,
+                    onClick={handleMove.bind(this,
                         {
-                          id: `${this.props.bookObj.id}`,
-                          shelfOut: `${this.props.bookObj.shelf}`,
+                          id: `${id}`,
+                          shelfOut: `${shelf}`,
                         },
                     )}
                 />
-
               </RadioButtonGroup>
             </MoveMenu>
           </Popover>

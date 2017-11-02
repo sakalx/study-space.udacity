@@ -11,7 +11,7 @@ const Button = styled(FloatingActionButton)`
   right: 25px;
 `;
 
-const BtnAdd = props =>
+const BtnAdd = () =>
     <Link to='/search'>
       <Button secondary={true}>
         <ContentAdd/>

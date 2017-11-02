@@ -7,24 +7,22 @@ import FlatButton from 'material-ui/FlatButton';
 
 const Img = styled.img`
   height: 270px;
-  width: 200px;
+  width: 200px;z
   margin: 10px;
   cursor: pointer;
 `;
 
 class Info extends React.Component {
-  constructor(props) {
-    super();
-    this.state = {
-      open: false,
-    };
-  }
+
+  state = {open: false};
 
   handleOpen = () => this.setState({open: true});
 
   handleClose = () => this.setState({open: false});
 
   render() {
+    const {title, imageLinks, publishedDate, description, infoLink} = this.props.bookObj;
+
     const actions = [
       <FlatButton
           label="Close"
@@ -35,21 +33,20 @@ class Info extends React.Component {
     return (
         <div>
           <Img onClick={this.handleOpen}
-               src={this.props.bookObj.imageLinks.thumbnail}
-               alt={this.props.bookObj.title}/>
-
+               src={imageLinks.thumbnail}
+               alt={title}
+          />
           <Dialog
               actions={actions}
               modal={false}
               open={this.state.open}
-              onRequestClose={this.handleClose}>
-
-            <h3>{this.props.bookObj.title}</h3>
-            <span>Published Date: {this.props.bookObj.publishedDate}</span>
-            <p>{this.props.bookObj.description}</p>
-            <a href={this.props.bookObj.infoLink} target="_blank">More info...</a>
+              onRequestClose={this.handleClose}
+          >
+            <h3>{title}</h3>
+            <span>Published Date: {publishedDate}</span>
+            <p>{description}</p>
+            <a href={infoLink} target="_blank">More info...</a>
           </Dialog>
-
         </div>
     );
   }
