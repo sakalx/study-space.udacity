@@ -9,7 +9,7 @@ const
     FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 const
-    develop = 'my-reads.app',
+    develop = 'meals.app',
     production = 'dist';
 
 const
