@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Paper from 'material-ui/Paper';
 
 const Wrap = styled(Paper)`
-  width: 95vw;
+  width: 98vw;
   text-align: center;
   display: inline-block;
   background: #2793e8 !important;
