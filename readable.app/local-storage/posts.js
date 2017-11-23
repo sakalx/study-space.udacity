@@ -5,11 +5,20 @@ const setData = data => lStorage.setData('posts', data);
 const getData = () => lStorage.getData('posts', defaultPosts);
 
 export const getAllPost = () => {
-  const posts = getData();
-  const keys = Object.keys(posts);
-  const filtered_keys = keys.filter(key => !posts[key].deleted);
+  // const keys = Object.keys(posts);
+  // //const filtered_keys = keys.filter(key => !posts[key].deleted);
+  // //return filtered_keys.map(key => posts[key]);
 
-  return filtered_keys.map(key => posts[key]);
+  const posts = getData();
+  let existingPosts = {};
+
+  for (let key in posts) {
+    if (!posts[key].deleted) {
+      existingPosts[posts[key].id] = posts[key];
+    }
+  }
+
+  return existingPosts;
 };
 
 export const getPostByCategory = category => {
@@ -27,24 +36,29 @@ export const getPostById = id => {
   return posts[id].deleted ? {} : posts[id];
 };
 
-export const addPost = ({id, timestamp, title, body, author, category}) => {
+export const addPost = ({
+                          id,
+                          timestamp = +new Date(),
+                          title = null,
+                          body = null,
+                          author = null,
+                          category = null,
+                        }) => {
   const posts = getData();
-  const newPosts = {
-    ...posts,
-    [id]: {
-      id,
-      timestamp,
-      title,
-      body,
-      author,
-      category,
-      voteScore: 1,
-      deleted: false,
-      commentCount: 0,
-    },
-  };
 
-  setData(newPosts);
+  posts[id] = {
+    id,
+    timestamp,
+    title,
+    body,
+    author,
+    category,
+    voteUp: 0,
+    voteDown: 0,
+    deleted: false,
+    commentCount: 0,
+  };
+  setData(posts);
 
   return posts[id];
 };
@@ -53,12 +67,12 @@ export const votePost = (id, vote) => {
   const posts = getData();
   const post = posts[id];
 
-  post.voteScore = vote
-      ? post.voteScore + 1
-      : post.voteScore - 1;
+  vote > 0 && (post.voteUp += vote);
+  vote < 0 && (post.voteDown += vote);
+
   setData(posts);
 
-  return post;
+  return posts[id];
 };
 
 export const disablePost = id => {
@@ -68,7 +82,7 @@ export const disablePost = id => {
   post.deleted = true;
   setData(posts);
 
-  return post;
+  return posts[id];
 };
 
 export const editPost = (id, post) => {
@@ -88,6 +102,4 @@ export const incrementCommentCounter = (id, count) => {
 
   post.commentCount += count;
   setData(posts);
-
-  return post;
 };
