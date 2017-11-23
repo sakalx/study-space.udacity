@@ -6,7 +6,7 @@ import MenuItem from 'material-ui/MenuItem';
 
 const WrapMenu = styled(DropDownMenu)`
   position: absolute !important;
-  top: 0;
+  top: 40px;
   right: 0;
 `;
 
