@@ -10,6 +10,10 @@ const actionTypes = {
     ALL: 'GET_ALL_CATEGORIES',
     TOGGLE: 'TOGGLE_CATEGORY',
   },
+  snackInfo: {
+    OPEN: 'OPEN_SNACK',
+    CLOSE: 'CLOSE_SNACK',
+  },
 };
 
 export default actionTypes;
