@@ -1,17 +1,25 @@
 import React from 'react';
+import styled from 'styled-components';
 
 import IconButton from 'material-ui/IconButton';
 import Categories from 'material-ui/svg-icons/navigation/apps';
 import Drawer from 'material-ui/Drawer';
+import CategoriesList from './CategoriesList';
+
+const Wrap = styled.div`
+  position: absolute;
+  top: 7px;
+  left: 0;
+`;
 
 const styles = {
   largeIcon: {
-    width: 60,
-    height: 60,
+    width: 50,
+    height: 50,
   },
   large: {
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
   },
 };
 
@@ -20,19 +28,16 @@ class BtnCategories extends React.Component {
     open: false,
   };
 
-  handleDrawer = () => {
-    this.setState({
-      open: !this.state.open,
-    });
-  };
+  handleDrawer = () => this.setState({open: !this.state.open});
 
   render() {
     const {open} = this.state;
+
     return (
-        <div>
+        <Wrap>
           <IconButton
+              touch={true}
               onClick={this.handleDrawer}
-              tooltip="Categories" touch={true}
               tooltipPosition="bottom-right"
               iconStyle={styles.largeIcon}
               style={styles.large}>
@@ -42,8 +47,9 @@ class BtnCategories extends React.Component {
                   docked={false} width={200}
                   open={open}>
             <h2>Categories</h2>
+            <CategoriesList/>
           </Drawer>
-        </div>
+        </Wrap>
     );
   }
 }
