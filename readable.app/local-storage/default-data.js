@@ -1,29 +1,32 @@
 export const defaultCategories = {
-  categories: [
-    {
-      name: 'react',
-      path: 'react',
-    },
-    {
-      name: 'redux',
-      path: 'redux',
-    },
-    {
-      name: 'udacity',
-      path: 'udacity',
-    },
-  ],
+  'someRandomID': {
+    id: 'someRandomID',
+    name: 'react',
+    active: true,
+  },
+  'someRandomID2': {
+    id: 'someRandomID2',
+    name: 'redux',
+    active: true,
+  },
+  'someRandomID3': {
+    id: 'someRandomID3',
+    name: 'udacity',
+    active: true,
+  },
+
 };
 
 export const defaultPosts = {
-  '8xf0y6ziyjabvozdd253nd': {
-    id: '8xf0y6ziyjabvozdd253nd',
+  'Udacity': {
+    id: 'Udacity',
     timestamp: 1467166872634,
     title: 'Udacity is the best place to learn React',
     body: 'Everyone says so after all.',
     author: 'thingtwo',
-    category: 'react',
-    voteScore: 1,
+    category: 'someRandomID3',
+    voteUp: 10,
+    voteDown: 0,
     deleted: false,
     commentCount: 2,
   },
@@ -33,8 +36,21 @@ export const defaultPosts = {
     title: 'Learn Redux in 10 minutes!',
     body: 'Just kidding. It takes more than 10 minutes to learn technology.',
     author: 'thingone',
-    category: 'redux',
-    voteScore: -5,
+    category: 'someRandomID',
+    voteUp: 0,
+    voteDown: -24,
+    deleted: true,
+    commentCount: 0,
+  },
+  'Redux': {
+    id: 'Redux',
+    timestamp: 1468479767190,
+    title: 'Learn Redux in 10 minutes!',
+    body: 'Just kidding. It takes more than 10 minutes to learn technology. Just kidding. It takes more than 10 minutes to learn technology.Just kidding. It takes more than 10 minutes to learn technology.Just kidding. It takes more than 10 minutes to learn technology.Just kidding. It takes more than 10 minutes to learn technology.Just kidding. It takes more than 10 minutes to learn technology.Just kidding. It takes more than 10 minutes to learn technology.Just kidding. It takes more than 10 minutes to learn technology.Just kidding. It takes more than 10 minutes to learn technology.Just kidding. It takes more than 10 minutes to learn technology.Just kidding. It takes more than 10 minutes to learn technology.Just kidding. It takes more than 10 minutes to learn technology.Just kidding. It takes more than 10 minutes to learn technology.Just kidding. It takes more than 10 minutes to learn technology.Just kidding. It takes more than 10 minutes to learn technology.Just kidding. It takes more than 10 minutes to learn technology.Just kidding. It takes more than 10 minutes to learn technology.Just kidding. It takes more than 10 minutes to learn technology.Just kidding. It takes more than 10 minutes to learn technology.Just kidding. It takes more than 10 minutes to learn technology.Just kidding. It takes more than 10 minutes to learn technology.Just kidding. It takes more than 10 minutes to learn technology.Just kidding. It takes more than 10 minutes to learn technology.Just kidding. It takes more than 10 minutes to learn technology.Just kidding. It takes more than 10 minutes to learn technology.Just kidechnology.Just kidding. It takes more than 10 minutes to learn technolechnology.Just kidding. It takes more than 10 minutes to learn technolechnology.Just kidding. It takes more than 10 minutes to learn technolechnology.Just kidding. It takes more than 10 minutes to learn technolechnology.Just kidding. It takes more than 10 minutes to learn technolechnology.Just kidding. It takes more than 10 minutes to learn technolechnology.Just kidding. It takes more than 10 minutes to learn technolechnology.Just kidding. It takes more than 10 minutes to learn technolechnology.Just kidding. It takes more than 10 minutes to learn technolechnology.Just kidding. It takes more than 10 minutes to learn technolechnology.Just kidding. It takes more than 10 minutes to learn technolding. It takes more than 10 minutes to learn technology.',
+    author: 'thingone',
+    category: 'someRandomID2',
+    voteUp: 12,
+    voteDown: -24,
     deleted: false,
     commentCount: 0,
   },
