@@ -12,13 +12,9 @@ import Toggle from 'material-ui/Toggle';
 class CategoriesList extends React.Component {
   dispatch = this.props.dispatch;
 
-  componentDidMount = () => {
-    this.dispatch(getAllCategory());
-  };
+  componentDidMount = () => this.dispatch(getAllCategory());
 
-  handleToggle = name => {
-    this.dispatch(toggleCategory(name));
-  };
+  handleToggle = name => this.dispatch(toggleCategory(name));
 
   render() {
     const {categories} = this.props;
