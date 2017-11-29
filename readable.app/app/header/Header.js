@@ -10,6 +10,7 @@ const Wrap = styled(Paper)`
   display: inline-block;
   background: #2793e8 !important;
   color: #303030 !important;
+  padding: 0 60px;
 `;
 
 const Header = props => (
