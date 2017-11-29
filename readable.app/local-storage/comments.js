@@ -41,8 +41,6 @@ export const addComments = comment => {
 
   incrementCommentCounter(parentId, 1);
   setData(newComments);
-
-  return comments[id];
 };
 
 export const voteComments = (id, vote) => {
@@ -53,8 +51,6 @@ export const voteComments = (id, vote) => {
       ? comment.voteScore + 1
       : comment.voteScore - 1;
   setData(comments);
-
-  return comment;
 };
 
 export const disableComments = id => {
@@ -64,8 +60,6 @@ export const disableComments = id => {
 
   setData(comments);
   incrementCommentCounter(comment.parentId, -1);
-
-  return comment;
 };
 
 export const editComments = (id, comment) => {
@@ -75,6 +69,4 @@ export const editComments = (id, comment) => {
     comments[id][prop] = comment[prop];
   }
   setData(comments);
-
-  return comments[id];
 };
