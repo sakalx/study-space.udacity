@@ -1,16 +1,19 @@
 import React from 'react';
 import {Route, Switch} from 'react-router-dom';
 
-import MainPag from './main.page/Index';
-//import SearchPage from './search-page/Index';
-import NotFound from './404/Index';
+import Main from './main-page/Main';
+import ReadMore from './read-more-page/ReadMore';
+import NotFound from './404/NotFound';
 
 class App extends React.Component {
   render() {
     return (
         <div>
           <Switch>
-            <Route exact path='/' component={MainPag}/>
+            <Route exact path='/' component={Main}/>
+            <Route exact path='/read-more/:id' component={ReadMore}/>
+
+
             <Route exact path='/newPost' component={NotFound}/>
             <Route component={NotFound}/>
           </Switch>
@@ -20,8 +23,3 @@ class App extends React.Component {
 }
 
 export default App;
-
-/*
- * Drawer
- * Badge
- * */
