@@ -1,6 +1,7 @@
 const actionTypes = {
   post: {
     ALL: 'GET_ALL_POSTS',
+    BY_ID: 'GET_POST_BY_ID',
     ADD: 'ADD_POST',
     VOTE: 'VOTE_POST',
     DISABLE: 'DISABLE_POST',
@@ -9,6 +10,14 @@ const actionTypes = {
   category: {
     ALL: 'GET_ALL_CATEGORIES',
     TOGGLE: 'TOGGLE_CATEGORY',
+  },
+  comment: {
+    BY_PARENT: 'GET_COMMENT_BY_PARENT',
+    BY_ID: 'GET_COMMENT_BY_ID',
+    ADD: 'ADD_COMMENT',
+    VOTE: 'VOTE_COMMENT',
+    DISABLE: 'DISABLE_COMMENT',
+    EDIT: 'EDIT_COMMENT',
   },
   snackInfo: {
     OPEN: 'OPEN_SNACK',
