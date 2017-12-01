@@ -7,11 +7,15 @@ const getData = () => lStorage.getData('comments', defaultComments);
 
 export const getCommByParent = parentId => {
   const comments = getData();
-  const keys = Object.keys(comments);
-  const filtered_keys = keys.filter(
-      key => comments[key].parentId === parentId && !comments[key].deleted);
+  let existingComments = {};
 
-  return filtered_keys.map(key => comments[key]);
+  for (let key in comments) {
+    if (comments[key].parentId === parentId && !comments[key].deleted) {
+      existingComments[comments[key].id] = comments[key];
+    }
+  }
+
+  return existingComments;
 };
 
 export const getCommById = id => {
@@ -22,8 +26,8 @@ export const getCommById = id => {
       : comments[id];
 };
 
-export const addComments = comment => {
-  const {id, timestamp, body, author, parentId} = comment;
+export const addComment = comment => {
+  const {id, timestamp = +new Date(), body, author, parentId} = comment;
   const comments = getData();
   const newComments = {
     ...comments,
@@ -41,32 +45,39 @@ export const addComments = comment => {
 
   incrementCommentCounter(parentId, 1);
   setData(newComments);
+
+  return comments[id];
 };
 
-export const voteComments = (id, vote) => {
+export const voteComment = (id, vote) => {
   const comments = getData();
   const comment = comments[id];
 
-  comment.voteScore = vote
-      ? comment.voteScore + 1
-      : comment.voteScore - 1;
+  vote > 0 && (comment.voteUp += vote);
+  vote < 0 && (comment.voteDown += vote);
   setData(comments);
+
+  return comments[id];
 };
 
-export const disableComments = id => {
+export const disableComment = id => {
   const comments = getData();
   const comment = comments[id];
   comment.deleted = true;
 
   setData(comments);
   incrementCommentCounter(comment.parentId, -1);
+
+  return comments[id];
 };
 
-export const editComments = (id, comment) => {
+export const editComment = (id, comment) => {
   const comments = getData();
 
   for (let prop in comment) {
     comments[id][prop] = comment[prop];
   }
   setData(comments);
+
+  return comments[id];
 };
