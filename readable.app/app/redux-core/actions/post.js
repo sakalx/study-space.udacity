@@ -8,6 +8,11 @@ export const getAllPost = () => ({
   payload: lStorage.getAllPost(),
 });
 
+export const getPostById = id => ({
+  type: post.BY_ID,
+  payload: lStorage.getPostById(id),
+});
+
 export const addPost = objPost => ({
   type: post.ADD,
   payload: lStorage.addPost(objPost),
@@ -23,9 +28,7 @@ export const disablePost = id => ({
   payload: lStorage.disablePost(id),
 });
 
-export const editPost = (id, post) => ({
+export const editPost = (id, editedPost) => ({
   type: post.EDIT,
-  payload: lStorage.editPost(id, post),
+  payload: lStorage.editPost(id, editedPost),
 });
-
-
