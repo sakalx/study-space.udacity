@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {getAllCategory, toggleCategory} from 'root/app/actions/category';
+import {getAllCategory, toggleCategory} from 'root/app/redux-core/actions/category';
 
 import {List, ListItem} from 'material-ui/List';
 import Toggle from 'material-ui/Toggle';
