@@ -6,9 +6,9 @@ import Categories from 'material-ui/svg-icons/navigation/apps';
 import Drawer from 'material-ui/Drawer';
 import CategoriesList from './CategoriesList';
 
-const Wrap = styled.div`
+const BtnCategory = styled.div`
   position: absolute;
-  top: 7px;
+  top: 10px;
   left: 0;
 `;
 
@@ -34,7 +34,7 @@ class BtnCategories extends React.Component {
     const {open} = this.state;
 
     return (
-        <Wrap>
+        <BtnCategory>
           <IconButton
               touch={true}
               onClick={this.handleDrawer}
@@ -49,7 +49,7 @@ class BtnCategories extends React.Component {
             <h2>Categories</h2>
             <CategoriesList/>
           </Drawer>
-        </Wrap>
+        </BtnCategory>
     );
   }
 }
