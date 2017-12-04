@@ -13,6 +13,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path='/' component={Main}/>
             <Route exact path='/update-post' component={UpdatePost}/>
+            <Route exact path='/update-post/:id' component={UpdatePost}/>
             <Route exact path='/read-more/:id' component={ReadMore}/>
             <Route component={NotFound}/>
           </Switch>
