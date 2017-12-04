@@ -12,7 +12,7 @@ const Button = styled(FloatingActionButton)`
 `;
 
 const BtnAdd = () => (
-    <Link to='/newPost'>
+    <Link to='/update-post'>
       <Button>
         <ContentAdd/>
       </Button>
