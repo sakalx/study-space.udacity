@@ -10,6 +10,9 @@ const actionTypes = {
   category: {
     ALL: 'GET_ALL_CATEGORIES',
     TOGGLE: 'TOGGLE_CATEGORY',
+    ADD: 'ADD_CATEGORY',
+    DISABLE: 'DISABLE_CATEGORY',
+    EDIT: 'EDIT_CATEGORY',
   },
   comment: {
     BY_PARENT: 'GET_COMMENT_BY_PARENT',
