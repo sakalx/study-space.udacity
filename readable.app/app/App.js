@@ -1,10 +1,10 @@
 import React from 'react';
 import {Route, Switch} from 'react-router-dom';
 
-import Main from './main-page/Main';
-import UpdatePost from './post-page/UpdatePost';
-import ReadMore from './read-more-page/ReadMore';
-import NotFound from './404/NotFound';
+import Main from './pages/main/Main';
+import UpdatePost from './pages/update-post/UpdatePost';
+import ReadMore from './pages/read-post/ReadMore';
+import NotFound from './pages/404/NotFound';
 
 class App extends React.Component {
   render() {
