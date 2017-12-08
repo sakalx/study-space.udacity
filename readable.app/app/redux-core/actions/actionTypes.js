@@ -11,7 +11,7 @@ const actionTypes = {
     ALL: 'GET_ALL_CATEGORIES',
     TOGGLE: 'TOGGLE_CATEGORY',
     ADD: 'ADD_CATEGORY',
-    DISABLE: 'DISABLE_CATEGORY',
+    DISABLE: 'DISABLE_CATEGORIES',
     EDIT: 'EDIT_CATEGORY',
   },
   comment: {
