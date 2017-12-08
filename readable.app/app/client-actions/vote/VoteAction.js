@@ -12,7 +12,6 @@ import ActionVoteDown from 'material-ui/svg-icons/action/thumb-down';
 @connect(store => ({
   posts: store.posts,
   comments: store.comments,
-  snackInfo: store.snackInfo,
 }))
 
 class VoteAction extends React.Component {
