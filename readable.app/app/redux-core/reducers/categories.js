@@ -4,6 +4,13 @@ function category(state = {}, action) {
   const {category} = actionTypes;
   const {type, payload = {}} = action;
 
+  const updateState = {
+    ...state,
+    [payload.id]: {
+      ...payload
+    },
+  };
+
   switch (type) {
     case category.ALL:
       return {
@@ -18,7 +25,17 @@ function category(state = {}, action) {
           active: !state[payload].active,
         },
       };
+    case category.ADD:
+      return updateState;
 
+    case category.EDIT:
+      return updateState;
+
+    case category.DISABLE:
+      return {
+        ...state,
+        ...payload,
+      };
   }
   return state;
 }
