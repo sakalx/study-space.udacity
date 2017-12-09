@@ -1,7 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import styled from 'styled-components';
-import {addCategory, disableCategories} from 'root/app/redux-core/actions/category';
+import {
+  addCategory,
+  disableCategories,
+  editCategories,
+} from 'root/app/redux-core/actions/category';
 
 import IconButton from 'material-ui/IconButton';
 import Categories from 'material-ui/svg-icons/navigation/apps';
@@ -10,9 +14,9 @@ import TextField from 'material-ui/TextField';
 
 import CategoriesList from './scenes/CategoriesList';
 
-import DeleteBtn from './scenes/DeleteBtn';
-import EditBtn from './scenes/EditBtn';
-import AddBtn from './scenes/AddBtn';
+import DeleteBtn from './components/DeleteBtn';
+import EditBtn from './components/EditBtn';
+import AddBtn from './components/AddBtn';
 
 const Wrap = styled.div`
   position: absolute;
@@ -49,17 +53,35 @@ class CategoriesDrawer extends React.Component {
     open: false,
     newCategory: false,
     deleteCategories: false,
+    editedCategories: false,
   };
 
-  handleAddCategory = () => {
+  handleSubmitAdd = () => {
     const {newCategory} = this.state;
 
     this.setState({newCategory: !newCategory});
     newCategory.length && this.dispatch(addCategory(newCategory));
   };
 
-  handleEditCategory = () => {
-    console.log(2);
+  handleSubmitEdit = () => {
+    const {editedCategories} = this.state;
+
+    this.setState({editedCategories: !editedCategories});
+    Object.keys(editedCategories).length &&
+    this.dispatch(editCategories(editedCategories));
+  };
+
+  handleSubmitDelete = () => {
+    const {deleteCategories: deleteArr = []} = this.state;
+
+    this.setState({deleteCategories: !deleteArr});
+    deleteArr.length && this.dispatch(disableCategories(deleteArr));
+  };
+
+  handleEditField = (id, name) => {
+    const {editedCategories = {}} = this.state;
+
+    this.setState({editedCategories: {...editedCategories, [id]: name}});
   };
 
   handleCheckDelete = ({target: {id}}, checked) => {
@@ -77,15 +99,8 @@ class CategoriesDrawer extends React.Component {
     }
   };
 
-  handleDeleteCategories = () => {
-    const {deleteCategories: deleteArr} = this.state;
-
-    this.setState({deleteCategories: !deleteArr});
-    deleteArr.length && this.dispatch(disableCategories(deleteArr));
-  };
-
   render() {
-    const {open, newCategory, deleteCategories} = this.state;
+    const {open, newCategory, deleteCategories, editedCategories} = this.state;
 
     return (
         <Wrap>
@@ -103,28 +118,31 @@ class CategoriesDrawer extends React.Component {
                   open={open}>
             <h2>Categories</h2>
             <CategoriesList showCheckBox={!!deleteCategories}
+                            showEditField={!!editedCategories}
                             checkDelete={this.handleCheckDelete}
+                            checkEditField={this.handleEditField}
             />
             {
               newCategory &&
               <TextField
-                  onChange={({target}) => this.setState({newCategory: target.value})}
                   hintText={'Name'}
                   floatingLabelText={'New Category'}
                   fullWidth={true}
+                  onChange={({target}) => this.setState({newCategory: target.value})}
               />
             }
             <Actions>
-              <DeleteBtn disabled={!!newCategory}
-                         deleteCategories={this.handleDeleteCategories}
+              <DeleteBtn disabled={!!newCategory || !!editedCategories}
+                         deleteCategories={this.handleSubmitDelete}
                          deleteCount={deleteCategories.length}
               />
               <EditBtn disabled={!!newCategory || !!deleteCategories}
-                       editCategory={this.handleEditCategory}
+                       editCategory={this.handleSubmitEdit}
+                       editMode={!!editedCategories}
               />
-              <AddBtn disabled={!!deleteCategories}
-                      addCategory={this.handleAddCategory}
-                      open={!!newCategory}
+              <AddBtn disabled={!!deleteCategories || !!editedCategories}
+                      addCategory={this.handleSubmitAdd}
+                      editMode={!!newCategory}
               />
             </Actions>
           </Drawer>
