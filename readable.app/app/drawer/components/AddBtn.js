@@ -6,14 +6,14 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import ContentCreate from 'material-ui/svg-icons/content/create';
 
 const AddBtn = props => {
-  const {disabled, addCategory, open} = props;
+  const {disabled, addCategory, editMode} = props;
 
   return (
       <FloatingActionButton mini={true}
                             disabled={disabled}
                             onClick={() => addCategory()}
       >
-        {open
+        {editMode
             ? <ContentCreate/>
             : <ContentAdd/>
         }
@@ -24,7 +24,7 @@ const AddBtn = props => {
 AddBtn.propTypes = {
   disabled: PropTypes.bool,
   addCategory: PropTypes.func,
-  open: PropTypes.bool,
+  editMode: PropTypes.bool,
 };
 
 export default AddBtn;
