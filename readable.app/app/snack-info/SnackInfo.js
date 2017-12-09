@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {closeSnack} from 'root/app/actions/snackInfo';
+import {closeSnack} from 'root/app/redux-core/actions/snackInfo';
 
 import Snackbar from 'material-ui/Snackbar';
 
