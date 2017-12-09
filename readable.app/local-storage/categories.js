@@ -44,12 +44,19 @@ export const disableCategories = ids => {
   return categories;
 };
 
-export const editCategory = (id, name) => {
+export const editCategories = editedObj => {
   const categories = getData();
 
-  categories[id].name = name;
+  for (let id in editedObj) {
+    if (editedObj[id]) {
+      categories[id].name = editedObj[id];
+    } else {
+      categories[id].deleted = true;
+      categories[id].active = false;
+    }
+  }
   setData(categories);
 
-  return categories[id];
+  return categories;
 };
 
