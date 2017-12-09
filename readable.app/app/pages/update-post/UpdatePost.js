@@ -1,19 +1,26 @@
 import React from 'react';
+import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import styled from 'styled-components';
 import {addPost, editPost, getPostById} from 'root/app/redux-core/actions/post';
 import {openSnack} from 'root/app/redux-core/actions/snackInfo';
 
-import Header from '../header/Header';
-import LinkToHome from '../link-to-home/LinkToHome';
+import Header from '../../header/Header';
+import LinkToHome from '../../links/LinkToHome';
 import TextField from 'material-ui/TextField';
 import SelectCategory from './scenes/SelectCategory';
-import BtnSubmit from './components/BtnSubmit';
-import SnackInfo from '../snack-info/SnackInfo';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentCreate from 'material-ui/svg-icons/content/create';
+import SnackInfo from '../../snack-info/SnackInfo';
 
-const BackToHome = styled.div`
+const ButtonHome = styled.div`
   position: absolute;
   top: 0px;
+`;
+const ButtonSubmit = styled(FloatingActionButton)`
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
 `;
 const Author = styled.div`
   display: flex;
@@ -70,6 +77,7 @@ class UpdatePost extends React.Component {
           addPost({category, title, body: post, author: name}),
       );
 
+      this.props.history.push('/');
       this.dispatch(openSnack(`Thank You ${name}, All Done!`));
     } else {
       this.dispatch(openSnack('Fill in All Required Fields'));
@@ -95,7 +103,6 @@ class UpdatePost extends React.Component {
             floatingLabelText={prop.toUpperCase()}
             multiLine={option}
             fullWidth={option}
-            rows={option ? Math.ceil(value.length / 100) + 1 : 1}
         />
     );
   };
@@ -109,9 +116,9 @@ class UpdatePost extends React.Component {
     return (
         <div>
           <Header title={header}/>
-          <BackToHome>
+          <ButtonHome>
             <LinkToHome/>
-          </BackToHome>
+          </ButtonHome>
           <SelectCategory handleSelect={this.handleSelectedCategory}
                           requiredField={category === false}
                           currentCategory={category ? category : ''}
@@ -121,11 +128,13 @@ class UpdatePost extends React.Component {
           <Author>
             {this.renderTextField({prop: 'name', value: name, option: false})}
           </Author>
-          <BtnSubmit submit={this.handleSubmit}/>
+          <ButtonSubmit onClick={this.handleSubmit}>
+            <ContentCreate/>
+          </ButtonSubmit>
           <SnackInfo/>
         </div>
     );
   }
 }
 
-export default UpdatePost;
+export default withRouter(UpdatePost);
