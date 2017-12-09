@@ -12,6 +12,7 @@ ________________________________________________________
 | ------ | ------ |
 | my-reads.app/ | **[MyReads.app](https://myreads.000webhostapp.com/)** |
 | contacts.app/ | **[MyContacts.app](https://my-contacts-000.000webhostapp.com/)** |
+| readable.app/ | **[Readable.app](https://readable.000webhostapp.com/)** |
 
 ## Switch between projects:
 ```js
@@ -24,7 +25,7 @@ ________________________________________________________
 ________________________________________________________
 ## Each Project have:
 
-- **api/** - _Calls to a backend API_
+- **api/ or local-storage/** - _Calls to a backend API_
 
 - **components/** - _Presentational (aka Dumb) components go here_
 
@@ -32,7 +33,7 @@ ________________________________________________________
 
 - **theme.js** - _Project theme_
 
-- **helpers.js** - _Helper Functions and Constants_
+- **helpers.js** - _Helper Functions and Constants if needed_
 
 - **favicon/** - _Favicon (Logo)_
 ________________________________________________________
