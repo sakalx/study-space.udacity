@@ -5,10 +5,6 @@ const setData = data => lStorage.setData('posts', data);
 const getData = () => lStorage.getData('posts', defaultPosts);
 
 export const getAllPost = () => {
-  // const keys = Object.keys(posts);
-  // //const filtered_keys = keys.filter(key => !posts[key].deleted);
-  // //return filtered_keys.map(key => posts[key]);
-
   const posts = getData();
   let existingPosts = {};
 
@@ -37,7 +33,7 @@ export const getPostById = id => {
 };
 
 export const addPost = ({
-                          id,
+                          id = (+new Date()).toString(36),
                           timestamp = +new Date(),
                           title = null,
                           body = null,
@@ -77,9 +73,8 @@ export const votePost = (id, vote) => {
 
 export const disablePost = id => {
   const posts = getData();
-  const post = posts[id];
 
-  post.deleted = true;
+  posts[id].deleted = true;
   setData(posts);
 
   return posts[id];
@@ -98,8 +93,7 @@ export const editPost = (id, post) => {
 
 export const incrementCommentCounter = (id, count) => {
   const posts = getData();
-  const post = posts[id];
 
-  post.commentCount += count;
+  posts[id].commentCount += count;
   setData(posts);
 };
