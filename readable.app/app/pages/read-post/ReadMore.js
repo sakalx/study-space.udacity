@@ -4,13 +4,14 @@ import styled from 'styled-components';
 import {getPostById} from 'root/app/redux-core/actions/post';
 import {getCommByParent} from 'root/app/redux-core/actions/comment';
 
-import Header from '../header/Header';
 import Subheader from 'material-ui/Subheader';
-import LinkToHome from '../link-to-home/LinkToHome';
-import VoteAction from '../client-actions/vote/VoteAction';
+import Header from '../../header/Header';
+import LinkToHome from '../../links/LinkToHome';
+import VoteAction from '../../client-actions/vote/VoteAction';
 import Paper from 'material-ui/Paper';
-import CardComment from '../card-comment/Comment';
-import SnackInfo from '../snack-info/SnackInfo';
+import CardComment from '../../cards/comment/Comment';
+import NewComment from './scenes/NewComment';
+import SnackInfo from '../../snack-info/SnackInfo';
 
 const BackToHome = styled.div`
   position: absolute;
@@ -21,7 +22,7 @@ const Author = styled.h3`
 `;
 const Comments = styled(Paper)`
   text-align: center;
-  color: #ff4081 !important;
+  color: #757575 !important;
 `;
 
 @connect(store => ({
@@ -51,17 +52,17 @@ class ReadMore extends React.Component {
       return (
           <div>
             <Header title={title}/>
-            <Author>Author: {author}</Author>
             <BackToHome>
               <LinkToHome/>
             </BackToHome>
-            <p>{body}</p>
+            <Author>Author: {author}</Author>
+            <p style={{whiteSpace: 'pre-line'}}>{body}</p>
             <Subheader>{String(new Date(timestamp))}</Subheader>
             <VoteAction id={id} type='posts'/>
             {
               !!sorted[0] &&
               <Comments zDepth={3}>
-                <h2>Comments</h2>
+                <h2>COMMENTS</h2>
               </Comments>
             }
             {
@@ -73,6 +74,9 @@ class ReadMore extends React.Component {
                   />,
               )
             }
+            <br/>
+            <NewComment parentId={this.id}/>
+            <br/>
             <SnackInfo/>
           </div>
       );
