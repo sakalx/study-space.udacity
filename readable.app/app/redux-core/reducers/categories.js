@@ -29,7 +29,10 @@ function category(state = {}, action) {
       return updateState;
 
     case category.EDIT:
-      return updateState;
+      return {
+        ...state,
+        ...payload,
+      };
 
     case category.DISABLE:
       return {
