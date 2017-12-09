@@ -8,6 +8,7 @@ import {openSnack} from 'root/app/redux-core/actions/snackInfo';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
+import WarningIcon from 'material-ui/svg-icons/alert/warning';
 
 const CategoryMenu = styled(DropDownMenu)`
   position: absolute !important;
@@ -20,45 +21,34 @@ const CategoryMenu = styled(DropDownMenu)`
 }))
 
 class SelectCategory extends React.Component {
-  dispatch = this.props.dispatch;
 
-  state = {
-    value: 0,
-  };
+  componentDidMount = () => this.props.dispatch(getAllCategory());
 
-  componentDidMount = () => this.dispatch(getAllCategory());
-
-  handleChoiceCategory = ({target}, index, value) => {
-    const {id} = target.parentElement.parentElement.parentElement;
-    this.setState({value});
-    this.props.handleSelect(id);
-  };
+  handleChoiceCategory = (e, i, value) => this.props.handleSelect(value);
 
   render() {
-    const {value} = this.state;
-    const {categories} = this.props;
+    const {categories, requiredField, currentCategory} = this.props;
     const categoryKey = Object.keys(categories);
+    const warningIcon = requiredField && <WarningIcon color={'#FF8A80'}/>;
 
     return (
-        <CategoryMenu value={value}
+        <CategoryMenu value={currentCategory}
                       onChange={this.handleChoiceCategory}>
-
           <MenuItem
-              value={0}
+              value=''
               disabled={true}
-              primaryText='Select Category'
-
+              primaryText={<div>Select Category {warningIcon}</div>}
           />
           <Divider />
           {
-            categoryKey.map((id, index) => {
-                  return <MenuItem
-                      key={id}
-                      id={id}
-                      value={index + 1}
-                      primaryText={categories[id].name}
-                  />;
-                },
+            categoryKey.map(id =>
+                !categories[id].deleted &&
+                <MenuItem
+                    key={id}
+                    id={id}
+                    value={id}
+                    primaryText={categories[id].name.toUpperCase()}
+                />,
             )
           }
         </CategoryMenu>
@@ -68,6 +58,8 @@ class SelectCategory extends React.Component {
 
 SelectCategory.propTypes = {
   handleSelect: PropTypes.func,
+  requiredField: PropTypes.bool,
+  currentCategory: PropTypes.string,
 };
 
 export default SelectCategory;
