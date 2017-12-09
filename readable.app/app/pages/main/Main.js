@@ -1,13 +1,22 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
+import styled from 'styled-components';
 import {getAllPost} from 'root/app/redux-core/actions/post';
 
-import Header from '../header/Header';
-import BtnCategories from './scenes/BtnCategories';
+import Header from '../../header/Header';
+import CategoriesDrawer from '../../drawer/CategoriesDrawer';
 import MenuSort from './scenes/MenuSort';
-import BtnAdd from './components/BtnAddPost';
-import Post from '../card-post/Post';
-import SnackInfo from '../snack-info/SnackInfo';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import Post from '../../cards/post/Post';
+import SnackInfo from '../../snack-info/SnackInfo';
+
+const ButtonAdd = styled(FloatingActionButton)`
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+`;
 
 @connect(store => ({
   posts: store.posts,
@@ -57,18 +66,22 @@ class MainPage extends React.Component {
     return (
         <div>
           <Header title='Readable'/>
-          <BtnCategories/>
+          <CategoriesDrawer/>
           <MenuSort sortBy={this.handleSort}/>
           {
             sorted.map(id =>
             activeCategories.includes(posts[id].category) &&
             !posts[id].deleted &&
             <Post
-                key={posts[id].id}
+                key={id}
                 post={posts[id]}
             />)
           }
-          <BtnAdd/>
+          <Link to='/update-post'>
+            <ButtonAdd>
+              <ContentAdd/>
+            </ButtonAdd>
+          </Link>
           <SnackInfo/>
         </div>
     );

@@ -57,7 +57,7 @@ class EditComment extends React.Component {
     this.props.handleCloset();
   };
 
-  renderTextField = (prop, value, option) =>
+  renderTextField = ({prop, value, option = true}) =>
       <TextField
           id={`edit-comment__${prop}`}
           errorText={this.state.required[prop]}
@@ -94,8 +94,8 @@ class EditComment extends React.Component {
             contentStyle={style}
             open={open}
         >
-          {this.renderTextField('name', author, false)}
-          {this.renderTextField('comment', body, true)}
+          {this.renderTextField({prop: 'name', value: author, option: false})}
+          {this.renderTextField({prop: 'comment', value: body})}
         </Dialog>
     );
   }

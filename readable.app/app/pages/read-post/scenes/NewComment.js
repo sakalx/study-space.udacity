@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import styled from 'styled-components';
 import theme from 'root/theme';
@@ -67,7 +68,7 @@ class NewComment extends React.Component {
           this.dispatch(openSnack(`Successfully Added`));
 
         } else {
-          this.dispatch(openSnack(`Require Name Author and Comment`));
+          this.dispatch(openSnack(`Require Name and Comment`));
         }
         break;
     }
@@ -199,5 +200,9 @@ class NewComment extends React.Component {
     );
   }
 }
+
+NewComment.propTypes = {
+  parentId: PropTypes.string,
+};
 
 export default NewComment;

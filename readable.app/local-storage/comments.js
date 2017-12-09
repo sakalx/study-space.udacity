@@ -26,25 +26,28 @@ export const getCommById = id => {
       : comments[id];
 };
 
-export const addComment = comment => {
-  const {id, timestamp = +new Date(), body, author, parentId} = comment;
+export const addComment = ({
+                             id = (+new Date()).toString(36),
+                             timestamp = +new Date(),
+                             author = null,
+                             body = null,
+                             parentId = null,
+                           }) => {
   const comments = getData();
-  const newComments = {
-    ...comments,
-    [id]: {
-      id,
-      timestamp,
-      body,
-      author,
-      parentId,
-      voteScore: 1,
-      deleted: false,
-      parentDeleted: false,
-    },
-  };
 
+  comments[id] = {
+    id,
+    timestamp,
+    body,
+    author,
+    parentId,
+    voteUp: 0,
+    voteDown: 0,
+    deleted: false,
+    parentDeleted: false,
+  };
   incrementCommentCounter(parentId, 1);
-  setData(newComments);
+  setData(comments);
 
   return comments[id];
 };
@@ -62,11 +65,10 @@ export const voteComment = (id, vote) => {
 
 export const disableComment = id => {
   const comments = getData();
-  const comment = comments[id];
-  comment.deleted = true;
 
+  comments[id].deleted = true;
   setData(comments);
-  incrementCommentCounter(comment.parentId, -1);
+  incrementCommentCounter(comments[id].parentId, -1);
 
   return comments[id];
 };

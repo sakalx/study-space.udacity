@@ -1,29 +1,39 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import styled from 'styled-components';
+import {openSnack} from 'root/app/redux-core/actions/snackInfo';
 
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 
-const WrapMenu = styled(DropDownMenu)`
+const SortMenu = styled(DropDownMenu)`
   position: absolute !important;
-  top: 40px;
-  right: 0;
+  top: 44px;
+  right: 1px;
 `;
 
+@connect(store => store)
+
 class MenuSort extends React.Component {
+  dispatch = this.props.dispatch;
+
   state = {
     value: 1,
   };
 
-  handleChange = (event, index, value) => this.setState({value});
+  handleChange = (event, index, value) => {
+    this.setState({value});
+    this.dispatch(openSnack('Sorted Completed'));
+  };
 
   render() {
     const {value} = this.state;
     const {sortBy} = this.props;
 
     return (
-        <WrapMenu value={value} onChange={this.handleChange}>
+        <SortMenu value={value}
+                  onChange={this.handleChange}>
           <MenuItem value={1}
                     onClick={() => sortBy('voteUp')}
                     primaryText="Sort By Highest Votes"
@@ -52,7 +62,7 @@ class MenuSort extends React.Component {
                     onClick={() => sortBy('author')}
                     primaryText="Sort By Author"
           />
-        </WrapMenu>
+        </SortMenu>
     );
   }
 }
