@@ -12,7 +12,7 @@ const actionTypes = {
     TOGGLE: 'TOGGLE_CATEGORY',
     ADD: 'ADD_CATEGORY',
     DISABLE: 'DISABLE_CATEGORIES',
-    EDIT: 'EDIT_CATEGORY',
+    EDIT: 'EDIT_CATEGORIES',
   },
   comment: {
     BY_PARENT: 'GET_COMMENT_BY_PARENT',
