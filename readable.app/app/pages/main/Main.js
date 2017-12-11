@@ -2,7 +2,8 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 import styled from 'styled-components';
-import {getAllPost} from 'root/app/redux-core/actions/post';
+import {getAllPost, getPostByCategories} from 'root/app/redux-core/actions/post';
+import {getAllCategory} from 'root/app/redux-core/actions/category';
 
 import Header from '../../header/Header';
 import CategoriesDrawer from '../../drawer/CategoriesDrawer';
@@ -11,6 +12,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import Post from '../../cards/post/Post';
 import SnackInfo from '../../snack-info/SnackInfo';
+import NotFound from 'root/app/pages/404/NotFound';
 
 const ButtonAdd = styled(FloatingActionButton)`
   position: fixed;
@@ -33,7 +35,27 @@ class MainPage extends React.Component {
     },
   };
 
-  componentDidMount = () => this.dispatch(getAllPost());
+  componentDidMount = () => {
+    const {loadCategories} = this.props.match.params;
+
+    const postByCategories = () => {
+      const {categories} = this.props;
+      const categoriesKey = Object.keys(categories);
+      const categoriesId = loadCategories.split(',');
+
+      console.log(loadCategories);
+
+      categoriesId.every(id => !categoriesKey.includes(id))
+          ? this.setState({category404: true})
+          : this.dispatch(getPostByCategories(categoriesId));
+    };
+
+    loadCategories
+        ? setTimeout(postByCategories, 0)
+        : this.dispatch(getAllPost());
+
+    this.dispatch(getAllCategory());
+  };
 
   handleSort = (field, increase = true) => {
     this.setState({
@@ -46,13 +68,8 @@ class MainPage extends React.Component {
 
   render() {
     const {field, increase} = this.state.sortBy;
-    const {posts, categories} = this.props;
+    const {posts} = this.props;
     const postsKey = Object.keys(posts);
-    const categoriesKey = Object.keys(categories);
-
-    const activeCategories = categoriesKey.filter(id =>
-        categories[id].active,
-    );
 
     const sorting = increase => (a, b) => {
       const postA = posts[a][field];
@@ -63,19 +80,19 @@ class MainPage extends React.Component {
 
     const sorted = postsKey.sort(sorting(increase));
 
+    if (this.state.category404) {
+      return <NotFound title={'Category'}/>;
+    }
+
     return (
         <div>
           <Header title='Readable'/>
           <CategoriesDrawer/>
           <MenuSort sortBy={this.handleSort}/>
-          {
-            sorted.map(id =>
-            activeCategories.includes(posts[id].category) &&
-            !posts[id].deleted &&
-            <Post
-                key={id}
+          {sorted.map(id => !posts[id].deleted &&
+          <Post key={id}
                 post={posts[id]}
-            />)
+          />)
           }
           <Link to='/update-post'>
             <ButtonAdd>

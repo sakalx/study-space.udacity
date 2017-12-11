@@ -11,8 +11,6 @@ import Snackbar from 'material-ui/Snackbar';
 class SnackInfo extends React.Component {
   dispatch = this.props.dispatch;
 
-  handleRequestClose = () => this.dispatch(closeSnack());
-
   render() {
     const {message, open} = this.props.snackInfo;
 
@@ -22,7 +20,7 @@ class SnackInfo extends React.Component {
               open={open}
               message={message}
               autoHideDuration={3000}
-              onRequestClose={this.handleRequestClose}
+              onRequestClose={() => this.dispatch(closeSnack())}
           />
         </div>
     );

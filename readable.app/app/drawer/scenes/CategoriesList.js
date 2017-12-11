@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {getAllCategory, toggleCategory} from 'root/app/redux-core/actions/category';
+import {toggleCategory} from 'root/app/redux-core/actions/category';
+import {getPostByCategories} from 'root/app/redux-core/actions/post';
 
 import {List, ListItem} from 'material-ui/List';
 import Checkbox from 'material-ui/Checkbox';
@@ -15,9 +17,37 @@ import Toggle from 'material-ui/Toggle';
 class CategoriesList extends React.Component {
   dispatch = this.props.dispatch;
 
-  componentDidMount = () => this.dispatch(getAllCategory());
+  componentDidMount = () => {
+    const {loadCategories} = this.props.match.params;
 
-  handleToggle = name => this.dispatch(toggleCategory(name));
+    const toggleDefault = () => {
+      const {categories} = this.props;
+      const categoriesKey = Object.keys(categories);
+      const categoriesId = loadCategories.split(',');
+
+      categoriesKey.forEach(id =>
+          !categoriesId.includes(id) && this.dispatch(toggleCategory(id)),
+      );
+    };
+
+    loadCategories && setTimeout(toggleDefault, 0);
+  };
+
+  handelOpenPageCategories = id => {
+    this.dispatch(toggleCategory(id));
+
+    const pushHistory = () => {
+      const {categories, history} = this.props;
+      const categoriesKeys = Object.keys(categories);
+      const loadCategories = categoriesKeys.filter(id => categories[id].active);
+
+      history.push(`/categories/${loadCategories}`);
+
+      this.dispatch(getPostByCategories(loadCategories));
+    };
+
+    setTimeout(pushHistory, 0);
+  };
 
   renderTextField = (id, name) =>
       <TextField
@@ -47,7 +77,8 @@ class CategoriesList extends React.Component {
                                           onCheck={(e, v) => checkDelete(e, v)}/>
                               : <span/> }
                           rightToggle={<Toggle toggled={categories[id].active}
-                                               onToggle={() => this.handleToggle(id)}
+                                               onToggle={() => this.handelOpenPageCategories(
+                                                   id)}
                           />}
               />))
           }
@@ -63,4 +94,4 @@ CategoriesList.propTypes = {
   checkEditField: PropTypes.func,
 };
 
-export default CategoriesList;
+export default withRouter(CategoriesList);

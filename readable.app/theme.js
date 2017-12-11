@@ -21,6 +21,7 @@ const muiTheme = () => {
   darkBaseTheme.palette.secondaryTextColor = 'rgba(255, 255, 255, 0.7)';
   //darkBaseTheme.palette.shadowColor        =  default Material-UI
   darkBaseTheme.palette.textColor = 'rgba(255, 255, 255, 1)';
+  darkBaseTheme.palette.warningColor = '#F44336';
 
   return darkBaseTheme;
 };

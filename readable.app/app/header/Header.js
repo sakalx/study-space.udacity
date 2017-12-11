@@ -13,9 +13,9 @@ const Wrap = styled(Paper)`
   padding: 0 60px 15px;
 `;
 
-const Header = props =>
+const Header = ({title}) =>
     <Wrap zDepth={5}>
-      <h2>{props.title}</h2>
+      <h2>{title}</h2>
     </Wrap>;
 
 Header.propTypes = {

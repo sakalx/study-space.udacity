@@ -26,6 +26,11 @@ function posts(state = {}, action) {
         },
       };
 
+    case post.BY_CATEGORIES:
+      return {
+        ...payload
+      };
+
     case post.ADD:
       return updateState;
 

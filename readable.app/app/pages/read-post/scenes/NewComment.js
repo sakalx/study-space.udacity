@@ -154,11 +154,14 @@ class NewComment extends React.Component {
       );
     };
 
-    const warningLabel = () =>
-        <StepLabel icon={<WarningIcon color={'#F44336'}/>}
-                   style={{color: '#F44336'}}>
-          This field is required.
-        </StepLabel>;
+    const warningLabel = () => {
+      const {warningColor} = theme.palette;
+
+      return <StepLabel icon={<WarningIcon color={warningColor}/>}
+                        style={{color: warningColor}}>
+        This field is required.
+      </StepLabel>;
+    };
 
     return (
         <Wrap zDepth={5}>

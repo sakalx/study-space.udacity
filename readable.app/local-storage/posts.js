@@ -17,13 +17,22 @@ export const getAllPost = () => {
   return existingPosts;
 };
 
-export const getPostByCategory = category => {
+export const getPostByCategories = categories => {
   const posts = getData();
-  const keys = Object.keys(posts);
-  const filtered_keys = keys.filter(
-      key => posts[key].category === category && !posts[key].deleted);
+  let activedPosts = {};
 
-  return filtered_keys.map(key => posts[key]);
+  const checkQuery = post =>
+      categories
+          ? !post.deleted && categories.includes(post.category)
+          : !post.deleted;
+
+  for (let key in posts) {
+    if (checkQuery(posts[key])) {
+      activedPosts[posts[key].id] = posts[key];
+    }
+  }
+
+  return activedPosts;
 };
 
 export const getPostById = id => {

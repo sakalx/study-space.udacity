@@ -13,6 +13,11 @@ export const getPostById = id => ({
   payload: lStorage.getPostById(id),
 });
 
+export const getPostByCategories = categories => ({
+  type: post.BY_CATEGORIES,
+  payload: lStorage.getPostByCategories(categories),
+});
+
 export const addPost = objPost => ({
   type: post.ADD,
   payload: lStorage.addPost(objPost),

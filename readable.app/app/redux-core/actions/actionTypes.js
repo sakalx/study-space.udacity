@@ -2,6 +2,7 @@ const actionTypes = {
   post: {
     ALL: 'GET_ALL_POSTS',
     BY_ID: 'GET_POST_BY_ID',
+    BY_CATEGORIES: 'GET_POST_BY_CATEGORIES',
     ADD: 'ADD_POST',
     VOTE: 'VOTE_POST',
     DISABLE: 'DISABLE_POST',

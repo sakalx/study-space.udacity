@@ -64,7 +64,7 @@ class CardComment extends React.Component {
           </Card>
       );
     }
-    return <h1>Rendering Comments</h1>;
+    return <h1>comment not existed</h1>;
   }
 }
 

@@ -12,6 +12,7 @@ import Paper from 'material-ui/Paper';
 import CardComment from '../../cards/comment/Comment';
 import NewComment from './scenes/NewComment';
 import SnackInfo from '../../snack-info/SnackInfo';
+import NotFound from 'root/app/pages/404/NotFound';
 
 const BackToHome = styled.div`
   position: absolute;
@@ -81,7 +82,7 @@ class ReadMore extends React.Component {
           </div>
       );
     }
-    return <h1>Rendering</h1>;
+    return <NotFound title={'Post'}/>;
   }
 }
 

@@ -18,27 +18,26 @@ class CardPost extends React.Component {
     expanded: false,
   };
 
-  handleExpandChange = expanded => this.setState({expanded: expanded});
-
-  handleEditPost = () => this.props.history.push(`update-post/${this.props.post.id}`);
+  handleEditPost = () => this.props.history.push(`/update-post/${this.props.post.id}`);
 
   render() {
     const {expanded} = this.state;
-    const {id, author, timestamp, title, commentCount, body} = this.props.post;
+    const {id, author, timestamp, title, commentCount, body, category} = this.props.post;
     const datePost = new Date(timestamp);
+
     const date = `${datePost.getUTCMonth() +
     1} / ${datePost.getUTCDate()} / ${datePost.getFullYear()} `;
     const {palette} = muiTheme;
 
     return (
-        <Card expanded={expanded} onExpandChange={this.handleExpandChange}>
+        <Card expanded={expanded}
+              onExpandChange={(expanded) => this.setState({expanded: expanded})}>
           <CardHeader
               title={`Posted by ${author}`}
               subtitle={date}
-              actAsExpander={true}
               showExpandableButton={true}
           />
-          <CardText>
+          <CardText actAsExpander={true}>
             <h1 style={{color: palette.primary1Color}}>{title}</h1>
           </CardText>
           <CardTitle expandable={true}
@@ -57,7 +56,7 @@ class CardPost extends React.Component {
                               type='posts'
                               handleEdit={this.handleEditPost}
             />
-            <Link to={`read-more/${id}`}>
+            <Link to={`/${category}/${id}`}>
               <FlatButton label="Read more"
                           primary={true}
               />
