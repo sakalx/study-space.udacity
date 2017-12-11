@@ -11,7 +11,7 @@ const middleware = applyMiddleware(promise(), thunk, logger);
 
 const store = createStore(
     reducer,
-    composeEnhancers(middleware),
+    //composeEnhancers(middleware),
 );
 
 export default store;
