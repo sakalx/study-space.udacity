@@ -43,8 +43,6 @@ class MainPage extends React.Component {
       const categoriesKey = Object.keys(categories);
       const categoriesId = loadCategories.split(',');
 
-      console.log(loadCategories);
-
       categoriesId.every(id => !categoriesKey.includes(id))
           ? this.setState({category404: true})
           : this.dispatch(getPostByCategories(categoriesId));
@@ -68,7 +66,7 @@ class MainPage extends React.Component {
 
   render() {
     const {field, increase} = this.state.sortBy;
-    const {posts} = this.props;
+    const {posts, categories} = this.props;
     const postsKey = Object.keys(posts);
 
     const sorting = increase => (a, b) => {
@@ -81,7 +79,7 @@ class MainPage extends React.Component {
     const sorted = postsKey.sort(sorting(increase));
 
     if (this.state.category404) {
-      return <NotFound title={'Category'}/>;
+      return <NotFound title={'Page'}/>;
     }
 
     return (
@@ -89,10 +87,16 @@ class MainPage extends React.Component {
           <Header title='Readable'/>
           <CategoriesDrawer/>
           <MenuSort sortBy={this.handleSort}/>
-          {sorted.map(id => !posts[id].deleted &&
-          <Post key={id}
-                post={posts[id]}
-          />)
+          {sorted.map(id => {
+            const post = posts[id];
+
+            if (!post.deleted && categories[post.category] &&
+                !categories[post.category].deleted) {
+              return <Post key={id}
+                           post={posts[id]}
+              />;
+            }
+          })
           }
           <Link to='/update-post'>
             <ButtonAdd>
