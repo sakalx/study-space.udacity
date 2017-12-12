@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {disablePost} from 'root/app/redux-core/actions/post';
 import {disableComment} from 'root/app/redux-core/actions/comment';
@@ -25,6 +26,7 @@ class DeleteEditAction extends React.Component {
     switch (this.type) {
       case 'posts':
         this.dispatch(disablePost(this.id));
+        this.props.history.push(`/`);
         break;
       case 'comments':
         this.dispatch(disableComment(this.id));
@@ -58,4 +60,4 @@ DeleteEditAction.propTypes = {
   handleEdit: PropTypes.func,
 };
 
-export default DeleteEditAction;
+export default withRouter(DeleteEditAction);
