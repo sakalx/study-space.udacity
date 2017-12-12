@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
-import {BrowserRouter} from 'react-router-dom'; //HashRouter BrowserRouter
+import {HashRouter} from 'react-router-dom'; //HashRouter BrowserRouter
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -16,9 +16,9 @@ injectTapEventPlugin();
 ReactDOM.render(
     <MuiThemeProvider muiTheme={getMuiTheme(muiTheme)}>
       <Provider store={store}>
-        <BrowserRouter>
+        <HashRouter>
           <App/>
-        </BrowserRouter>
+        </HashRouter>
       </Provider>
     </MuiThemeProvider>,
     document.getElementById('root'),
