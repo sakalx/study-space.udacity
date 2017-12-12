@@ -41,7 +41,7 @@ class CategoriesList extends React.Component {
       const categoriesKeys = Object.keys(categories);
       const loadCategories = categoriesKeys.filter(id => categories[id].active);
 
-      history.push(`/categories/${loadCategories}`);
+      history.push(`/${loadCategories}`);
 
       this.dispatch(getPostByCategories(loadCategories));
     };
