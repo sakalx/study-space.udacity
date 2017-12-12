@@ -1,18 +1,18 @@
 export const defaultCategories = {
-  'jayjzcpr': {
-    id: 'jayjzcpr',
+  'react': {
+    id: 'react',
     name: 'react',
     active: true,
     deleted: false,
   },
-  'jayjznks': {
-    id: 'jayjznks',
+  'redux': {
+    id: 'redux',
     name: 'redux',
     active: true,
     deleted: false,
   },
-  'jayjzz1l': {
-    id: 'jayjzz1l',
+  'udacity': {
+    id: 'udacity',
     name: 'udacity',
     active: true,
     deleted: false,
@@ -27,7 +27,7 @@ export const defaultPosts = {
     title: 'All the fundamental React.js concepts, jammed into this single Medium article',
     body: 'Last year I wrote a short book on learning React.js which turned out to be about 100 pages. \nThis year, I am going to challenge myself to summarize it as an article on Medium. This article is not going to cover what React is or why you should learn it. Instead, this is a practical introduction to the fundamentals of React.js for those who are already familiar with JavaScript and know the basics of the DOM API.\n\n All code examples below are labeled for reference. They are purely intended to provide examples of concepts. Most of them can be written in a much better way.',
     author: 'Samer Margo',
-    category: 'jayjzcpr',
+    category: 'react',
     voteUp: 10,
     voteDown: 0,
     deleted: false,
@@ -39,7 +39,7 @@ export const defaultPosts = {
     title: 'Scaling your Redux App with ducks',
     body: 'How does your front-end application scale? How do you make sure that the code you’re writing is maintainable 6 months from now?\nRedux took the world of front-end development by storm in 2015 and established itself as a standard — even beyond the scope of React. At the company where I work, we recently finished refactoring a fairly large React codebase, adding redux instead of reflux. \n\nWe did it because moving forward would have been impossible without a well structured application and a good set of rules. The codebase is more than two years old, and reflux was there from the beginning. We had to change code that wasn’t touched in more than a year and was pretty tangled with the React components. \nBased on the work we did on the project, I put together this repo, explaining our approach in organizing our redux code.',
     author: 'Alex Greg',
-    category: 'jayjznks',
+    category: 'redux',
     voteUp: 12,
     voteDown: -2,
     deleted: false,
@@ -51,7 +51,7 @@ export const defaultPosts = {
     title: 'Review: Udacity Data Analyst Nanodegree Program',
     body: 'Udacity’s Data Analyst Nanodegree program was one of the first online data science programs in the online education revolution.\n\n\n It aims to “ensure you master the exact skills necessary to build a career in data science.” Does it accomplish its goal? Is it the best option available?',
     author: 'David Melnik',
-    category: 'jayjzz1l',
+    category: 'udacity',
     voteUp: 26,
     voteDown: -12,
     deleted: false,
