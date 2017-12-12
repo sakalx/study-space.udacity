@@ -43,12 +43,14 @@ class CardPost extends React.Component {
           <CardTitle expandable={true}
                      subtitle={`${commentCount} comments`}
           />
-          <CardText style={{color: palette.primary2Color}} expandable={true}>
+          <CardText expandable={true}
+                    style={{color: palette.primary2Color}}
+          >
             {
               body.length < 200 ? body : `${body.slice(0, 200)}...`
             }
           </CardText>
-          <Actions>
+          <Actions expandable={true}>
             <VoteAction id={id}
                         type='posts'
             />
