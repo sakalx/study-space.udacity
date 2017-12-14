@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import theme from 'root/theme';
 
 import Sign404 from 'material-ui/svg-icons/alert/warning';
+import LinkToHome from '../../links/LinkToHome';
 
 const Warning = styled.section`
   text-align: center;
@@ -15,6 +16,7 @@ const Emoji = styled.div`
 
 const NotFound = ({title = 'Page'}) =>
     <Warning>
+      <LinkToHome/>
       <h1>404</h1>
       <Emoji>😜</Emoji>
       <h2>We are Sorry
