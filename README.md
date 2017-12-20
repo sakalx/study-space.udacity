@@ -12,7 +12,7 @@ ________________________________________________________
 | ------ | ------ |
 | my-reads.app/ | **[MyReads.app](https://myreads.000webhostapp.com/)** |
 | contacts.app/ | **[MyContacts.app](https://my-contacts-000.000webhostapp.com/)** |
-| readable.app/ | **[Readable.app](https://readable.000webhostapp.com/)** |
+| readable.app/ | **[Readable.app](https://readably.000webhostapp.com/)** |
 
 ## Switch between projects:
 ```js
